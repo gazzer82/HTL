@@ -31,8 +31,8 @@ if (Meteor.isServer) {
   Meteor.startup(function () {
       var defaultData = {
         twitterEnabled: true,
-        instagramEnabled: false,
-        vineEnabled: false,
+        instagramEnabled: true,
+        vineEnabled: true,
         fetchCount: 1,
           searchTerms: [
             {

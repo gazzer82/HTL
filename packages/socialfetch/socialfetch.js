@@ -1,9 +1,9 @@
 socialfetch = {
-	collection: new Mongo.Collection(null),
+	//collection: new Mongo.Collection(null),
 
-	throw: function(message) {
-		Errors.collection.insert({message: message, seen: false})
-	},
+	//throw: function(message) {
+	//	Errors.collection.insert({message: message, seen: false})
+	//},
 
 	fetch: function(defaultData, callback) {
 		var returnData = {}
@@ -11,17 +11,17 @@ socialfetch = {
 		var callbackTarget = 0;
 		var callbackCount = 0;
 		if (defaultData.twitterEnabled){
-			callbackTarget += defaultData.searchTerms.count
+			callbackTarget += defaultData.searchTerms.length
 		}
 		if (defaultData.instagramEnabled){
-			callbackTarget += defaultData.searchTerms.count
+			callbackTarget += defaultData.searchTerms.length
 		}
 		if (defaultData.vineEnabled){
-			callbackTarget += defaultData.searchTerms.count
+			callbackTarget += defaultData.searchTerms.length
 		}
 		for (term in defaultData.searchTerms) {
 			termObject = defaultData.searchTerms[term]
-			if (defaultData.twitterEnabled)
+			if (defaultData.twitterEnabled) {
 				fetchIndividual('twitter', termObject.term, defaultData.fetchCount, termObject.latestTwitter, function(err, data) {
 					callbackCount ++;
 					console.log("callbackCount = " + callbackCount);
@@ -30,13 +30,48 @@ socialfetch = {
 						errors.push(err)
 					} else {
 						returnData.push(data)
-						if (callbackCount == callbackTarget){
-							console.log("all done fetching so calling callback");
-							callback(err, returnData);
-						}
+					}
+					if (callbackCount == callbackTarget){
+						console.log("all done fetching so calling callback");
+						callback(err, returnData);
 					}
 					//console.log(returnData);
 				});
+			}
+			if (defaultData.instagramEnabled) {
+				fetchIndividual('instagram', termObject.term, defaultData.fetchCount, termObject.latestInstagram, function(err, data) {
+					callbackCount ++;
+					console.log("callbackCount = " + callbackCount);
+					console.log("callbackTarget = " + callbackTarget);
+					if (err) {
+						errors.push(err)
+					} else {
+						returnData.push(data)
+					}
+					if (callbackCount == callbackTarget){
+						console.log("all done fetching so calling callback");
+						callback(err, returnData);
+					}
+					//console.log(returnData);
+				});
+			}
+			if (defaultData.vineEnabled) {
+				fetchIndividual('vine', termObject.term, defaultData.fetchCount, termObject.latestVine, function(err, data) {
+					callbackCount ++;
+					console.log("callbackCount = " + callbackCount);
+					console.log("callbackTarget = " + callbackTarget);
+					if (err) {
+						errors.push(err)
+					} else {
+						returnData.push(data)
+					}
+					if (callbackCount == callbackTarget){
+						console.log("all done fetching so calling callback");
+						callback(err, returnData);
+					}
+					//console.log(returnData);
+				});
+			}
 			//console.log(defaultData.searchTerms[term].term);
 		}
 	}
@@ -50,7 +85,6 @@ fetchIndividual = function(type, searchTerm, fetchCount, latestID, callback) {
 		//var Vine = require('vine_fetch.js')
 
 		var util = Npm.require('util');
-		console.log("Running twitter post fetch");
 		var instagramClientID = '045e0562dee344e3b8e41f7a274221b4'
 		var twitterBearerToken = 'AAAAAAAAAAAAAAAAAAAAAHNXewAAAAAAKfB%2BV%2Fa58coGj26sfa89INQxi8k%3DXA9dqNpHszjkLU20xrg1ImelF6CE5kTgAPhTMRzZQVBudnKD9c'
 		switch (type) {
@@ -131,6 +165,7 @@ twitterfetch = function(input, callback){
 	      bearer_token: input.bearer_token
 	    });
 	    var params = {q: input.searchTerm, count: input.fetchCount, since_id: input.latestID};
+	    console.log("Searching twitter for " + input.searchTerm);
 	    client.get('/search/tweets', params, function(error, body, response){
 	      if (!error) {
 	      //var error = undefined;
@@ -247,6 +282,9 @@ instagramfetch = function (input, callback)  {
       if (input.latestID) {
             tempURL = tempURL + '&min_tag_id=' + input.latestID;
       }
+
+      console.log("Searching instagram for " + searchTerm);
+
         request.get({
         url: tempURL,
         json: true,
@@ -324,7 +362,7 @@ instagramfetch = function (input, callback)  {
 
 
 vinefetch = function (input, callback)  {
-
+	var request = Npm.require('request');
 	var Twitter = Npm.require('twitter');
 	//var Twitter = require('../../node-modules/node-twitter/lib/twitter.js');
 	var OAuth2 = Npm.require('OAuth').OAuth2;
@@ -346,6 +384,8 @@ vinefetch = function (input, callback)  {
           url: tempURL,
           json: true,
       },
+
+      console.log("Searching Vine for " + searchTerm),
 
       function(err, response, body) {
         var latestIDValue = 0;
