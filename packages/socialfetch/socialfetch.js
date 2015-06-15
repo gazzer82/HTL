@@ -27,13 +27,18 @@ socialfetch = {
 					console.log("callbackCount = " + callbackCount);
 					console.log("callbackTarget = " + callbackTarget);
 					if (err) {
-						errors.push(err)
+						error = {
+							service:'twitter',
+							term:data[1].searchedTerm,
+							error: err
+						}
+						errors.push(error)
 					} else {
 						returnData.push(data)
 					}
 					if (callbackCount == callbackTarget){
 						console.log("all done fetching so calling callback");
-						callback(err, returnData);
+						callback(errors, returnData);
 					}
 					//console.log(returnData);
 				});
@@ -44,13 +49,18 @@ socialfetch = {
 					console.log("callbackCount = " + callbackCount);
 					console.log("callbackTarget = " + callbackTarget);
 					if (err) {
-						errors.push(err)
+						error = {
+							service:'instagram',
+							term: data[1].searchedTerm,
+							error: err
+						}
+						errors.push(error)
 					} else {
 						returnData.push(data)
 					}
 					if (callbackCount == callbackTarget){
 						console.log("all done fetching so calling callback");
-						callback(err, returnData);
+						callback(errors, returnData);
 					}
 					//console.log(returnData);
 				});
@@ -61,13 +71,18 @@ socialfetch = {
 					console.log("callbackCount = " + callbackCount);
 					console.log("callbackTarget = " + callbackTarget);
 					if (err) {
-						errors.push(err)
+						error = {
+							service: 'vine',
+							term: data[1].searchedTerm,
+							error: err
+						}
+						errors.push(error)
 					} else {
 						returnData.push(data)
 					}
 					if (callbackCount == callbackTarget){
 						console.log("all done fetching so calling callback");
-						callback(err, returnData);
+						callback(errors, returnData);
 					}
 					//console.log(returnData);
 				});
@@ -103,9 +118,9 @@ fetchIndividual = function(type, searchTerm, fetchCount, latestID, callback) {
 		            }
 		            twitterfetch(twitterVals, function(err, returnValue) {
 		              if(err){
-		                console.log('We have an errror' + util.inspect(err, false, null));
+		                //console.log('We have an errror' + util.inspect(err, false, null));
 		              } else {
-		                console.log('All went fine');
+		                //console.log('All went fine');
 		              }
 		              callback (err, returnValue);
 		            });
@@ -119,9 +134,9 @@ fetchIndividual = function(type, searchTerm, fetchCount, latestID, callback) {
 		            }
 		            instagramfetch(instagramVals, function(err, returnValue) {
 		              if(err){
-		                console.log('We have an errror');
+		                //console.log('We have an errror');
 		              } else {
-		                console.log('All went fine');
+		                //console.log('All went fine');
 		              }
 		              callback (err, returnValue);
 		            });
@@ -133,9 +148,9 @@ fetchIndividual = function(type, searchTerm, fetchCount, latestID, callback) {
 		            }
 		            vinefetch(vineVals, function(err, returnValue) {
 		              if(err){
-		                console.log('We have an error - ' + util.inspect(err, false, null));
+		                //console.log('We have an error - ' + util.inspect(err, false, null));
 		              } else {
-		                console.log('All went fine');
+		                //console.log('All went fine');
 		              }
 		              callback (err, returnValue);
 		            });
@@ -164,21 +179,21 @@ twitterfetch = function(input, callback){
 	      consumer_secret: input.consumer_secret,
 	      bearer_token: input.bearer_token
 	    });
+	    var latestIDValue = 0
+	    if (input.latestID > 0){
+	        var latestIDValue = input.latestID;
+	    }
+	    var returnArr = [];
+	    var postsArr = [];
+	    var valuesArr = [];
 	    var params = {q: input.searchTerm, count: input.fetchCount, since_id: input.latestID};
 	    console.log("Searching twitter for " + input.searchTerm);
 	    client.get('/search/tweets', params, function(error, body, response){
 	      if (!error) {
 	      //var error = undefined;
-	      var returnArr = [];
-	      var postsArr = [];
-	      var valuesArr = [];
 	      var postScanned = false;
 	      var d = new Date();
 	      var n = d.toISOString();
-	      var latestIDValue = 0
-	      if (input.latestID > 0){
-	        var latestIDValue = input.latestID;
-	      }
 	      for (var i in body.statuses) {
 
 	            var postHasVideo = 'false';
@@ -244,12 +259,13 @@ twitterfetch = function(input, callback){
 	          });
 	          
 	       }
-	       values = {}
-	       values.latestID = latestIDValue
-	       returnArr.push(postsArr);
-	       returnArr.push(values);
 	      }
-	      console.log(error, returnArr);
+	      //console.log(error, returnArr);
+	      values = {}
+	      values.latestID = latestIDValue
+	      values.searchedTerm = input.searchTerm
+	      returnArr.push(postsArr);
+	      returnArr.push(values);
 	      callback(error, returnArr);
 	    });
 },
@@ -339,16 +355,17 @@ instagramfetch = function (input, callback)  {
               });
             }
           }
-        var values = {}
-        if (postsArr.length > 1){
-          values.latestID = body.pagination.min_tag_id
-        } else {
-          values.latestID = input.latestID
-        }
-        var returnArr = [];
-        returnArr.push(postsArr);
-        returnArr.push(values);
     }
+    var values = {}
+    if (postsArr.length > 1){
+          values.latestID = body.pagination.min_tag_id
+    } else {
+          values.latestID = input.latestID
+    }
+    values.searchedTerm = input.searchTerm
+    var returnArr = [];
+    returnArr.push(postsArr);
+    returnArr.push(values);
     callback(error, returnArr);
   });
 },
@@ -396,57 +413,60 @@ vinefetch = function (input, callback)  {
           //return exits.error(err);
           error = err;
         }
-        if (response.statusCode > 299 || response.statusCode < 200) {
-          //return exits.error(response.statusCode);
-          error = response;
-        } else {
-        //var postsArr = [];
-        var d = new Date();
-        var n = d.toISOString();
-          //callback(response);
-          if (body.data.records){
-              for (var i in body.data.records) {
-                if (body.data.records[i].postId > input.latestID || !input.latestID){
-                  if (body.data.records[i].postId > latestIDValue){
-                    latestIDValue = body.data.records[i].postId;
-                  }
-                  var postHasVideo = true;
-                  var postHasImage = false;
-                  var postImagePreviewURL = '';
-                  var postImageURL = '';
-                  var postVideoPreviewURL = '';
-                  var postVideoURL = '';
-                  var postScanned = false;
-                  postsArr.push({
-                    postID: body.data.records[i].postId,
-                    postText: body.data.records[i].description,
-                    postStatus: 'new',
-                    postDate: body.data.records[i].created,
-                    postScanned: postScanned,
-                    postScheduleDate: '',
-                    postUserImageURL: body.data.records[i].avatarUrl,
-                    postUserRealName: body.data.records[i].username,
-                    postUserName: body.data.records[i].username,
-                    postUpdateUser: '',
-                    postType: 'instagram',
+        if (response && response.statusCode){
+	        if (response.statusCode > 299 || response.statusCode < 200) {
+	          //return exits.error(response.statusCode);
+	          error = response;
+	        } else {
+	        //var postsArr = [];
+	        var d = new Date();
+	        var n = d.toISOString();
+	          //callback(response);
+	          if (body.data.records){
+	              for (var i in body.data.records) {
+	                if (body.data.records[i].postId > input.latestID || !input.latestID){
+	                  if (body.data.records[i].postId > latestIDValue){
+	                    latestIDValue = body.data.records[i].postId;
+	                  }
+	                  var postHasVideo = true;
+	                  var postHasImage = false;
+	                  var postImagePreviewURL = '';
+	                  var postImageURL = '';
+	                  var postVideoPreviewURL = '';
+	                  var postVideoURL = '';
+	                  var postScanned = false;
+	                  postsArr.push({
+	                    postID: body.data.records[i].postId,
+	                    postText: body.data.records[i].description,
+	                    postStatus: 'new',
+	                    postDate: body.data.records[i].created,
+	                    postScanned: postScanned,
+	                    postScheduleDate: '',
+	                    postUserImageURL: body.data.records[i].avatarUrl,
+	                    postUserRealName: body.data.records[i].username,
+	                    postUserName: body.data.records[i].username,
+	                    postUpdateUser: '',
+	                    postType: 'instagram',
 
-                    postStatusDate: n,
-                        
-                    postImagePreviewURL: body.data.records[i].thumbnailUrl,
-                    postImageURL: body.data.records[i].thumbnailUrl,
-                    postVideoPreviewURL: body.data.records[i].videoLowURL,
-                    postVideoURL: body.data.records[i].videoUrl
-                  });
-                }
-            }
-          } else {
-            error = 'No Records Found';
-          }
-        var values = {}
-        var returnArr = [];
-        returnArr.push(postsArr);
-        returnArr.push(values);
-    }
+	                    postStatusDate: n,
+	                        
+	                    postImagePreviewURL: body.data.records[i].thumbnailUrl,
+	                    postImageURL: body.data.records[i].thumbnailUrl,
+	                    postVideoPreviewURL: body.data.records[i].videoLowURL,
+	                    postVideoURL: body.data.records[i].videoUrl
+	                  });
+	                }
+	            }
+	          } else {
+	            error = 'No Records Found';
+	          }
+	    }
+	}
+	var values = {}
+	values.searchedTerm = input.searchTerm
+	var returnArr = [];
+	returnArr.push(postsArr);
+	returnArr.push(values);
     callback(error, returnArr);
   });
 }

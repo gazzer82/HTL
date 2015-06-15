@@ -53,7 +53,7 @@ if (Meteor.isServer) {
     //SyncedCron.start();
     socialfetch.fetch(defaultData, function(err, returnValue){
       if (err) {
-        console.log("Error Located");
+        console.log(err.length + " errors located");
         console.log(err);
       } else {
         console.log("All went to plan");
