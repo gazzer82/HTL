@@ -6,7 +6,7 @@ socialfetch = {
 	//},
 
 	fetch: function(defaultData, callback) {
-		var returnData = {}
+		var returnData = []
 		var errors = []
 		var callbackTarget = 0;
 		var callbackCount = 0;
@@ -177,8 +177,12 @@ twitterfetch = function(input, callback){
 	    var client = new Twitter({
 	      consumer_key: input.consumer_key,
 	      consumer_secret: input.consumer_secret,
-	      bearer_token: input.bearer_token
+	      bearer_token: input.bearer_token,
+	      request_options: {
+    		"timeout": 30000
+  			}
 	    });
+
 	    var latestIDValue = 0
 	    if (input.latestID > 0){
 	        var latestIDValue = input.latestID;
@@ -187,6 +191,7 @@ twitterfetch = function(input, callback){
 	    var postsArr = [];
 	    var valuesArr = [];
 	    var params = {q: input.searchTerm, count: input.fetchCount, since_id: input.latestID};
+
 	    console.log("Searching twitter for " + input.searchTerm);
 	    client.get('/search/tweets', params, function(error, body, response){
 	      if (!error) {
@@ -264,7 +269,9 @@ twitterfetch = function(input, callback){
 	      values = {}
 	      values.latestID = latestIDValue
 	      values.searchedTerm = input.searchTerm
+	      values.networkSearched = "twitter"
 	      returnArr.push(postsArr);
+	      //console.log(postsArr);
 	      returnArr.push(values);
 	      callback(error, returnArr);
 	    });
@@ -363,6 +370,7 @@ instagramfetch = function (input, callback)  {
           values.latestID = input.latestID
     }
     values.searchedTerm = input.searchTerm
+    values.networkSearched = "instagram"
     var returnArr = [];
     returnArr.push(postsArr);
     returnArr.push(values);
@@ -464,6 +472,7 @@ vinefetch = function (input, callback)  {
 	}
 	var values = {}
 	values.searchedTerm = input.searchTerm
+	values.networkSearched = "vine"
 	var returnArr = [];
 	returnArr.push(postsArr);
 	returnArr.push(values);
