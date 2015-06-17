@@ -275,6 +275,7 @@ twitterfetch = function(input, callback){
 	      values.latestID = latestIDValue
 	      values.searchedTerm = input.searchTerm
 	      values.networkSearched = "twitter"
+	      values.eventID = input.eventID
 	      returnArr.push(postsArr);
 	      //console.log(postsArr);
 	      returnArr.push(values);
@@ -378,6 +379,7 @@ instagramfetch = function (input, callback)  {
     }
     values.searchedTerm = input.searchTerm
     values.networkSearched = "instagram"
+    values.eventID = input.eventID
     var returnArr = [];
     returnArr.push(postsArr);
     returnArr.push(values);
@@ -482,6 +484,7 @@ vinefetch = function (input, callback)  {
 	var values = {}
 	values.searchedTerm = input.searchTerm
 	values.networkSearched = "vine"
+	values.eventID = input.eventID
 	var returnArr = [];
 	returnArr.push(postsArr);
 	returnArr.push(values);

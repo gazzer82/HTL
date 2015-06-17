@@ -92,6 +92,13 @@ if (Meteor.isServer) {
           console.log(events[i][i2][1].searchedTerm);
           console.log(events[i][i2][1].networkSearched);
           console.log(events[i][i2][1].latestID);
+
+          Meteor.call('updateTermID', events[i][i2][1], function (err, value) {
+              if (err){
+                throw(err)
+              }
+          });
+
           //Now lets loop through and add the posts for this term and network to Mongo
           for (i3 in events[i][i2][0]) {
             //Let's add each post to the database.
@@ -108,6 +115,20 @@ if (Meteor.isServer) {
       }
       return
     },
+    updateTermID: function(eventTerm) {
+      //So checking to see which network it is that we've got posts from, and updating the lastes ID for that term/network
+      console.log(eventTerm);
+      if(eventTerm.networkSearched === "twitter"){
+        console.log("Updating twitter latest id for " + eventTerm.searchedTerm);
+        HTLEvents.update({_id :eventTerm.eventID, "searchTerms.term":eventTerm.searchedTerm} , {$set: {"searchTerms.$.latestTwitter": eventTerm.latestID}});
+      } else if (eventTerm.networkSearched === "instagram") {
+        console.log("Updating instagram latest id for " + eventTerm.searchedTerm);
+        HTLEvents.update({_id :eventTerm.eventID, "searchTerms.term":eventTerm.searchedTerm} , {$set: {"searchTerms.$.latestInstagram": eventTerm.latestID}});
+      } else if (eventTerm.networkSearched === "vine") {
+        console.log("Updating vine latest id for " + eventTerm.searchedTerm);
+        HTLEvents.update({_id :eventTerm.eventID, "searchTerms.term":eventTerm.searchedTerm} , {$set: {"searchTerms.$.latestVine": eventTerm.latestID}});
+      }
+    }
   }),
   
   Meteor.startup(function (){
