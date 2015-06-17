@@ -22,7 +22,7 @@ socialfetch = {
 		for (term in defaultData.searchTerms) {
 			termObject = defaultData.searchTerms[term]
 			if (defaultData.twitterEnabled) {
-				fetchIndividual('twitter', termObject.term, defaultData.fetchCount, termObject.latestTwitter, defaultData.searchTerms, function(err, data) {
+				fetchIndividual('twitter', termObject.term, defaultData.fetchCount, termObject.latestTwitter, defaultData._id, function(err, data) {
 					callbackCount ++;
 					console.log("callbackCount = " + callbackCount);
 					console.log("callbackTarget = " + callbackTarget);
@@ -44,7 +44,7 @@ socialfetch = {
 				});
 			}
 			if (defaultData.instagramEnabled) {
-				fetchIndividual('instagram', termObject.term, defaultData.fetchCount, termObject.latestInstagram, defaultData.searchTerms, function(err, data) {
+				fetchIndividual('instagram', termObject.term, defaultData.fetchCount, termObject.latestInstagram, defaultData._id, function(err, data) {
 					callbackCount ++;
 					console.log("callbackCount = " + callbackCount);
 					console.log("callbackTarget = " + callbackTarget);
@@ -66,7 +66,7 @@ socialfetch = {
 				});
 			}
 			if (defaultData.vineEnabled) {
-				fetchIndividual('vine', termObject.term, defaultData.fetchCount, termObject.latestVine, defaultData.searchTerms, function(err, data) {
+				fetchIndividual('vine', termObject.term, defaultData.fetchCount, termObject.latestVine, defaultData._id, function(err, data) {
 					callbackCount ++;
 					console.log("callbackCount = " + callbackCount);
 					console.log("callbackTarget = " + callbackTarget);
