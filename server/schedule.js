@@ -9,93 +9,106 @@ if (Meteor.isServer) {
     schedule: function(parser) {
       // parser is a later.parse object
       return parser.text('every 30 seconds');
-    }, 
-    job: function(intendedAt) {
+  },
+  job: function(intendedAt) {
+      //Load the NPM's required
       var util = Npm.require('util');
       var fs = Npm.require('fs');
       var os = Npm.require('os');
       var path = Npm.require('path');
 
-      var file = path.join('/temp', 'JSON_Export.txt');
+      //Log the intedned run time and that we're starting
       console.log(intendedAt);
       console.log("starting fetch");
-    var defaultData = {
-        twitterEnabled: true,
-        instagramEnabled: false,
-        vineEnabled: false,
-        fetchCount: 2,
-          searchTerms: [
-            {
-              term: "badger",
-              latestTwitter: 0,
-              latestInstagram: 0,
-              latestVine: 0
-            },
-            {
-              term:"freedom",
-              latestTwitter: 0,
-              latestInstagram: 0,
-              latestVine: 0
-            }
-          ]
-    }
-    Meteor.call('fetchEnabledEvents', function (error, eventList) {
-    //console.log(eventslist);
-      if (!eventList){
-        throw(err)
-      } else {
+
+      //Fetching the enabled events
+      Meteor.call('fetchEnabledEvents', function (error, eventList) {
+        var posts = [];
+        var eventsToFetch = 0;
+        var eventsFetched = 0;
+        if (!eventList){
+          throw(err)
+        } else {
+          eventsToFetch = eventList.length;
           for (var eventi in eventList){
             console.log("Event Object = " + util.inspect(eventList[eventi], false, null));
-              //for (var termi in eventList[eventi].searchTerms){
-                //searchTerm = eventList[eventi].searchTerms[termi]
-                //console.log(searchTerm)
+            socialfetch.fetch(eventList[eventi], Meteor.bindEnvironment(function(err, returnValue){
+              if (err.length) {
+                console.log(err.length + " errors located");
+                for (i in err){
+                  console.log(err[i]);
+                  Meteor.call('fetchErrorsInsert', err[i], function(error, result){
+                  if(error)
+                    Errors.throw(error.reason);
+                  });
+                }
+              } else if (returnValue) {
 
-
-                
-                socialfetch.fetch(eventList[eventi], Meteor.bindEnvironment(function(err, returnValue){
-                  if (err.length) {
-                    console.log(err.length + " errors located");
-                    //console.log(err);
-                    for (i in err){
-                          console.log(err[i]);
-                          Meteor.call('fetchErrorsInsert', err[i], function(error, result){
-                          //if(error)
-                            //Errors.throw(error.reason);
-                          });
-                    }
-                  } 
-                  else if (returnValue) {
+                posts.push(returnValue);
+                eventsFetched ++;
+                if (eventsFetched == eventsToFetch) {
+                  Meteor.call('processPosts', posts, function (error) {
                     console.log("All went to plan");
-                    console.log("We have " + returnValue.length + " seaches returned");
-                    //fs.writeFile('output.json',JSON.stringify(returnValue) , function (err) {console.log('written');});
-                    //console.log(returnValue);
-                    for (i in returnValue){
-                        //console.log("Term searched " + returnValue[i][1].searchedTerm)
-                        //console.log("LatestID =  " + returnValue[i][1].latestID)
-                        var searchObject = returnValue[i][1]
-                        console.log("Searched Object = " + util.inspect(searchObject, false, null));
-                        Meteor.call('searchTermsUpdateLatest', eventList[eventi]._id, returnValue[i][1].searchedTerm, returnValue[i][1].networkSearched, returnValue[i][1].latestID, function (error, eventList) {
-                        //Update the latest ID for this seach term.
-                        //console.log("These are the posts for " + util.inspect(returnValue[0][0][1], false, null));
-                        for (i2 in returnValue[i][0]) {
-                            //console.log(util.inspect(returnValue[0][i][i2], false, null));
-                            //console.log(returnValue[i][0][i2].postText);
-                            Meteor.call('socialPostsInsert', returnValue[i][0][i2], function(err, result){
-                              if (err){
-                                throw(err)
-                              }
-                          });
-                      }});
-                    }
-                  }
-                }));
-            //}
+                  });
+                }
+                
+                //console.log("We have " + returnValue.length + " seaches returned");
+                //for (i in returnValue){
+                  //var searchObject = returnValue[i][1]
+                  //console.log("Searched Object = " + util.inspect(searchObject, false, null));
+
+                          /*Meteor.call('searchTermsUpdateLatest', eventList[eventi]._id, returnValue[i][1].searchedTerm, returnValue[i][1].networkSearched, returnValue[i][1].latestID, function (error, eventList) {
+                          //Update the latest ID for this seach term.
+                          //console.log("These are the posts for " + util.inspect(returnValue[0][0][1], false, null));
+                          for (i2 in returnValue[i][0]) {
+                              //console.log(util.inspect(returnValue[0][i][i2], false, null));
+                              //console.log(returnValue[i][0][i2].postText);
+                              Meteor.call('socialPostsInsert', returnValue[i][0][i2], function(err, result){
+                                if (err){
+                                  throw(err)
+                                }
+                            });
+                        }});*/
+                  //}
+              }
+            }));
           }
-      }});
-      //var posts = socialfetch.fetch("twitter", "badger", 1, 1);
-      ///console.log(posts);
+
+        }});
     }
-  });
+  }),
+
+  Meteor.methods({
+    processPosts: function(events) {
+      //We have been sent an array of events, which contain the returned posts so let's process them.
+      console.log("We have " + events.length + " events to process");
+      //Ok so let's start looping through the events 1 at a time.
+      for (i in events){
+        //Ok so now we need to process this event, let's loop through each terms returned posts.
+        console.log("We have " + events[i].length + " terms to process");
+        for (i2 in events[i]){
+          //Ok first off let's update the latest fetched ID for this search term.
+          console.log(i2);
+          console.log(events[i][i2][1].searchedTerm);
+          console.log(events[i][i2][1].networkSearched);
+          console.log(events[i][i2][1].latestID);
+          //Now lets loop through and add the posts for this term and network to Mongo
+          for (i3 in events[i][i2][0]) {
+            //Let's add each post to the database.
+            console.log("@" + events[i][i2][0][i3].postUserName + " said " + events[i][i2][0][i3].postText);
+            Meteor.call('socialPostsInsert', events[i][i2][0][i3], function(err, result){
+              if (err){
+                throw(err)
+              }
+            });
+          }
+          //var searchObject = postsArray;
+          //console.log("Searched Object = " + util.inspect(searchObject, false, null));
+        }
+      }
+      return
+    },
+  }),
   
   Meteor.startup(function (){
 
