@@ -18,3 +18,5 @@ ian:accounts-ui-bootstrap-3
 accounts-password
 momentjs:moment
 meteorhacks:kadira-profiler
+useraccounts:bootstrap
+email
