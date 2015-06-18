@@ -1,7 +1,8 @@
 if (Meteor.isServer) {
   // optionally set the collection's name that synced cron will use
   SyncedCron.config({
-    collectionName: 'systemTimer'
+    collectionName: 'systemTimer',
+    collectionTTL: 3600
   });
 
   SyncedCron.add({
@@ -88,10 +89,6 @@ if (Meteor.isServer) {
         console.log("We have " + events[i].length + " terms to process");
         for (i2 in events[i]){
           //Ok first off let's update the latest fetched ID for this search term.
-          console.log(i2);
-          console.log(events[i][i2][1].searchedTerm);
-          console.log(events[i][i2][1].networkSearched);
-          console.log(events[i][i2][1].latestID);
 
           Meteor.call('updateTermID', events[i][i2][1], function (err, value) {
               if (err){
@@ -102,7 +99,6 @@ if (Meteor.isServer) {
           //Now lets loop through and add the posts for this term and network to Mongo
           for (i3 in events[i][i2][0]) {
             //Let's add each post to the database.
-            console.log("@" + events[i][i2][0][i3].postUserName + " said " + events[i][i2][0][i3].postText);
             Meteor.call('socialPostsInsert', events[i][i2][0][i3], function(err, result){
               if (err){
                 throw(err)
