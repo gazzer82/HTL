@@ -519,4 +519,4 @@ vinefetch = function (input, callback)  {
 	returnArr.push(values);
     callback(error, returnArr);
   });
-}
+};

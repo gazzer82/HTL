@@ -32,8 +32,10 @@ if (Meteor.isServer) {
         } else {
           eventsToFetch = eventList.length;
           for (var eventi in eventList){
+            /*jshint loopfunc: true */
             console.log("Event Object = " + util.inspect(eventList[eventi], false, null));
             socialfetch.fetch(eventList[eventi], Meteor.bindEnvironment(function(err, returnValue){
+              /*jshint loopfunc: true */
               if (err.length) {
                 console.log(err.length + " errors located");
                 for (var i in err){
@@ -50,7 +52,6 @@ if (Meteor.isServer) {
                 eventsFetched ++;
                 if (eventsFetched == eventsToFetch) {
                   Meteor.call('processPosts', posts, function (error) {
-                    /*jshint loopfunc: true */
                     console.log("All went to plan");
                   });
                 }
@@ -91,9 +92,8 @@ if (Meteor.isServer) {
         console.log("We have " + events[i].length + " terms to process");
         for (var i2 in events[i]){
           //Ok first off let's update the latest fetched ID for this search term.
-
+          /*jshint loopfunc: true */
           Meteor.call('updateTermID', events[i][i2][1], function (err, value) {
-            /*jshint loopfunc: true */
               if (err){
                 throw(err);
               }
@@ -101,6 +101,7 @@ if (Meteor.isServer) {
 
           //Now lets loop through and add the posts for this term and network to Mongo
           for (var i3 in events[i][i2][0]) {
+          /*jshint loopfunc: true */
             //Let's add each post to the database.
             Meteor.call('socialPostsInsert', events[i][i2][0][i3], function(err, result){
               /*jshint loopfunc: true */
@@ -132,7 +133,6 @@ if (Meteor.isServer) {
   }),
   
   Meteor.startup(function (){
-    /*jshint -W030 */
     //socialPosts = new Mongo.Collection('socialposts');
     //fetchErrors = new Mongo.Collection('fetcherrors');
     // code to run on server at startup
