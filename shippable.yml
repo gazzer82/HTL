@@ -1,0 +1,22 @@
+language: node_js
+node_js:
+  - 0.12.4
+services:
+  - mongodb
+before_install:
+
+install:
+  - curl https://install.meteor.com/ | sh
+before_script:
+
+notifications:
+  email:
+    recipients:
+      - contact@garethjeanne.co.uk
+    on_success: change
+    on_failure: always
+
+
+after_success:
+  - if [ "$BRANCH" == "master" ];then git remote add dokku dokku@dcloud.space:htl; fi
+  - if [ "$BRANCH" == "master" ];then git push dokku master; fi

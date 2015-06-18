@@ -146,6 +146,7 @@ fetchIndividual = function(type, searchTerm, fetchCount, latestID, eventID, call
 		    case 'vine':
 		              var vineVals = {
 		              searchTerm: searchTerm,
+		              fetchCount: fetchCount,
 		              latestID: latestID,
 		              eventID: eventID
 		            }
@@ -212,9 +213,9 @@ twitterfetch = function(input, callback){
 	            var postVideoURL = '';
 	            var postEventID = input.eventID;
 
-	            if (body.statuses[i].id > input.latestID){
-	              since_id_return = body.statuses[i].id;
-	            }
+	            //if (body.statuses[i].id > input.latestID){
+	            //  since_id_return = body.statuses[i].id;
+	            //}
 
 	            if (body.statuses[i].id > latestIDValue){
 	              latestIDValue = body.statuses[i].id;
@@ -295,6 +296,11 @@ instagramfetch = function (input, callback)  {
     var i3 = 0;
     var searchTerm = "";
     var error;
+   	var latestIDValue = 0
+   	var fetched = 0
+	if (input.latestID > 0){
+	    var latestIDValue = input.latestID;
+	}
     if (input.searchTerm){
       var searchTermArray = input.searchTerm.split(" ");
         for (i=0; i < searchTermArray.length; i++){
@@ -333,46 +339,54 @@ instagramfetch = function (input, callback)  {
         //var postsArr = [];
         var d = new Date();
         var n = d.toISOString();
+        console.log(body.pagination.min_tag_id);
+        console.log(input.latestID);
           if (body.pagination.min_tag_id > input.latestID || !input.latestID ){
             for (var i in body.data) {
+            	console.log("Entering Vine Loop")
+           		if (body.data[i].id > latestIDValue){
+	            	latestIDValue = body.data[i].id;
+	        	}
+	        	if (input.fetchCount == fetched) {
+	        		console.log("breaking")
+	        		break; 
+	        	}
+	        	fetched ++
+            	var postHasVideo = false;
+            	var postHasImage = false;
+            	var postImagePreviewURL = '';
+            	var postImageURL = '';
+            	var postVideoPreviewURL = '';
+            	var postVideoURL = '';
+            	var postScanned = false;
+            	var postEventID = input.eventID;
+	            postsArr.push({
+		            postID: body.data[i].id,
+		            postEventID: postEventID,
+		            postText: body.data[i].caption.text,
+		            postStatus: 'new',
+		            postDate: body.data[i].created_time,
+		            postScheduleDate: '',
+		            postUserImageURL: body.data[i].user.profile_picture,
+		            postUserRealName: body.data[i].user.full_name,
+		            postUserName: body.data[i].user.username,
+		            postUpdateUser: '',
+		            postType: 'instagram',
 
-              var postHasVideo = false;
-              var postHasImage = false;
-              var postImagePreviewURL = '';
-              var postImageURL = '';
-              var postVideoPreviewURL = '';
-              var postVideoURL = '';
-              var postScanned = false;
-              var postEventID = input.eventID;
-
-              postsArr.push({
-                postID: body.data[i].id,
-                postEventID: postEventID,
-                postText: body.data[i].caption.text,
-                postStatus: 'new',
-                postDate: body.data[i].created_time,
-                postScheduleDate: '',
-                postUserImageURL: body.data[i].user.profile_picture,
-                postUserRealName: body.data[i].user.full_name,
-                postUserName: body.data[i].user.username,
-                postUpdateUser: '',
-                postType: 'instagram',
-
-                postStatusDate: n,
-                    
-                postHasVideo: postHasVideo,
-                postHasImage: true,
-                postImagePreviewURL: body.data[i].images.low_resolution.url,
-                postImageURL: body.data[i].images.standard_resolution.url,
-                postVideoPreviewURL: postVideoPreviewURL,
-                postVideoURL: postVideoURL
-
-              });
+		            postStatusDate: n,
+		                    
+		            postHasVideo: postHasVideo,
+		            postHasImage: true,
+		            postImagePreviewURL: body.data[i].images.low_resolution.url,
+		            postImageURL: body.data[i].images.standard_resolution.url,
+		            postVideoPreviewURL: postVideoPreviewURL,
+		            postVideoURL: postVideoURL
+	            });
             }
           }
     }
     var values = {}
-    if (postsArr.length > 1){
+    if (postsArr.length > 0){
           values.latestID = body.pagination.min_tag_id
     } else {
           values.latestID = input.latestID
@@ -406,6 +420,11 @@ vinefetch = function (input, callback)  {
     var min_tag_id = 0;
     var searchTerm = "";
     var error;
+   	var latestIDValue = 0
+   	var fetched = 0
+	if (input.latestID > 0){
+	    var latestIDValue = input.latestID;
+	}
     if (input.searchTerm){
       var searchTermArray = input.searchTerm.split(" ");
         for (i=0; i < searchTermArray.length; i++){
@@ -445,6 +464,11 @@ vinefetch = function (input, callback)  {
 	                  if (body.data.records[i].postId > latestIDValue){
 	                    latestIDValue = body.data.records[i].postId;
 	                  }
+	                  	if (input.fetchCount == fetched) {
+	        				console.log("breaking")
+	        				break; 
+	        			}
+	        			fetched ++
 	                  var postHasVideo = true;
 	                  var postHasImage = false;
 	                  var postImagePreviewURL = '';
@@ -465,7 +489,7 @@ vinefetch = function (input, callback)  {
 	                    postUserRealName: body.data.records[i].username,
 	                    postUserName: body.data.records[i].username,
 	                    postUpdateUser: '',
-	                    postType: 'instagram',
+	                    postType: 'vine',
 
 	                    postStatusDate: n,
 	                        
@@ -482,6 +506,7 @@ vinefetch = function (input, callback)  {
 	    }
 	}
 	var values = {}
+	values.latestID = latestIDValue
 	values.searchedTerm = input.searchTerm
 	values.networkSearched = "vine"
 	values.eventID = input.eventID
