@@ -22,6 +22,7 @@ socialfetch = {
 		for (var term in defaultData.searchTerms) {
 			termObject = defaultData.searchTerms[term];
 			if (defaultData.twitterEnabled) {
+				/*jshint loopfunc: true */
 				fetchIndividual('twitter', termObject.term, defaultData.fetchCount, termObject.latestTwitter, defaultData._id, function(err, data) {
 					callbackCount ++;
 					console.log("callbackCount = " + callbackCount);
@@ -44,6 +45,7 @@ socialfetch = {
 				});
 			}
 			if (defaultData.instagramEnabled) {
+				/*jshint loopfunc: true */
 				fetchIndividual('instagram', termObject.term, defaultData.fetchCount, termObject.latestInstagram, defaultData._id, function(err, data) {
 					callbackCount ++;
 					console.log("callbackCount = " + callbackCount);
@@ -66,6 +68,7 @@ socialfetch = {
 				});
 			}
 			if (defaultData.vineEnabled) {
+				/*jshint loopfunc: true */
 				fetchIndividual('vine', termObject.term, defaultData.fetchCount, termObject.latestVine, defaultData._id, function(err, data) {
 					callbackCount ++;
 					console.log("callbackCount = " + callbackCount);
