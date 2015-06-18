@@ -6,21 +6,21 @@ socialfetch = {
 	//},
 
 	fetch: function(defaultData, callback) {
-		var returnData = []
-		var errors = []
+		var returnData = [];
+		var errors = [];
 		var callbackTarget = 0;
 		var callbackCount = 0;
 		if (defaultData.twitterEnabled){
-			callbackTarget += defaultData.searchTerms.length
+			callbackTarget += defaultData.searchTerms.length;
 		}
 		if (defaultData.instagramEnabled){
-			callbackTarget += defaultData.searchTerms.length
+			callbackTarget += defaultData.searchTerms.length;
 		}
 		if (defaultData.vineEnabled){
-			callbackTarget += defaultData.searchTerms.length
+			callbackTarget += defaultData.searchTerms.length;
 		}
-		for (term in defaultData.searchTerms) {
-			termObject = defaultData.searchTerms[term]
+		for (var term in defaultData.searchTerms) {
+			termObject = defaultData.searchTerms[term];
 			if (defaultData.twitterEnabled) {
 				fetchIndividual('twitter', termObject.term, defaultData.fetchCount, termObject.latestTwitter, defaultData._id, function(err, data) {
 					callbackCount ++;
@@ -31,10 +31,10 @@ socialfetch = {
 							service:'twitter',
 							term:data[1].searchedTerm,
 							error: err
-						}
-						errors.push(error)
+						};
+						errors.push(error);
 					} else {
-						returnData.push(data)
+						returnData.push(data);
 					}
 					if (callbackCount == callbackTarget){
 						console.log("all done fetching so calling callback");
@@ -53,10 +53,10 @@ socialfetch = {
 							service:'instagram',
 							term: data[1].searchedTerm,
 							error: err
-						}
-						errors.push(error)
+						};
+						errors.push(error);
 					} else {
-						returnData.push(data)
+						returnData.push(data);
 					}
 					if (callbackCount == callbackTarget){
 						console.log("all done fetching so calling callback");
@@ -75,10 +75,10 @@ socialfetch = {
 							service: 'vine',
 							term: data[1].searchedTerm,
 							error: err
-						}
-						errors.push(error)
+						};
+						errors.push(error);
 					} else {
-						returnData.push(data)
+						returnData.push(data);
 					}
 					if (callbackCount == callbackTarget){
 						console.log("all done fetching so calling callback");
@@ -100,8 +100,8 @@ fetchIndividual = function(type, searchTerm, fetchCount, latestID, eventID, call
 		//var Vine = require('vine_fetch.js')
 
 		var util = Npm.require('util');
-		var instagramClientID = '045e0562dee344e3b8e41f7a274221b4'
-		var twitterBearerToken = 'AAAAAAAAAAAAAAAAAAAAAHNXewAAAAAAKfB%2BV%2Fa58coGj26sfa89INQxi8k%3DXA9dqNpHszjkLU20xrg1ImelF6CE5kTgAPhTMRzZQVBudnKD9c'
+		var instagramClientID = '045e0562dee344e3b8e41f7a274221b4';
+		var twitterBearerToken = 'AAAAAAAAAAAAAAAAAAAAAHNXewAAAAAAKfB%2BV%2Fa58coGj26sfa89INQxi8k%3DXA9dqNpHszjkLU20xrg1ImelF6CE5kTgAPhTMRzZQVBudnKD9c';
 		switch (type) {
 		    case undefined :
 		        console.log("No social network type specified");
@@ -116,7 +116,7 @@ fetchIndividual = function(type, searchTerm, fetchCount, latestID, eventID, call
 		              fetchCount: fetchCount,
 		              latestID: latestID,
 		              eventID: eventID
-		            }
+		            };
 		            twitterfetch(twitterVals, function(err, returnValue) {
 		              if(err){
 		                //console.log('We have an errror' + util.inspect(err, false, null));
@@ -133,7 +133,7 @@ fetchIndividual = function(type, searchTerm, fetchCount, latestID, eventID, call
 		              latestID: latestID,
 		              clientID: instagramClientID,
 		              eventID: eventID
-		            }
+		            };
 		            instagramfetch(instagramVals, function(err, returnValue) {
 		              if(err){
 		                //console.log('We have an errror');
@@ -149,7 +149,7 @@ fetchIndividual = function(type, searchTerm, fetchCount, latestID, eventID, call
 		              fetchCount: fetchCount,
 		              latestID: latestID,
 		              eventID: eventID
-		            }
+		            };
 		            vinefetch(vineVals, function(err, returnValue) {
 		              if(err){
 		                //console.log('We have an error - ' + util.inspect(err, false, null));
@@ -161,7 +161,7 @@ fetchIndividual = function(type, searchTerm, fetchCount, latestID, eventID, call
 		        break;
 		    default:
 		    	console.log("No know social network of type " + req.body.type);
-		        err = "No know social network of type " + req.body.type
+		        err = "No know social network of type " + req.body.type;
 		        callback (err, returnValue);
 		  }
 },
@@ -177,7 +177,7 @@ twitterfetch = function(input, callback){
 	var util = Npm.require('util');
 
 
-	    var posts = []
+	    var posts = [];
 	    var client = new Twitter({
 	      consumer_key: input.consumer_key,
 	      consumer_secret: input.consumer_secret,
@@ -187,9 +187,9 @@ twitterfetch = function(input, callback){
   			}
 	    });
 
-	    var latestIDValue = 0
+	    var latestIDValue = 0;
 	    if (input.latestID > 0){
-	        var latestIDValue = input.latestID;
+	        latestIDValue = input.latestID;
 	    }
 	    var returnArr = [];
 	    var postsArr = [];
@@ -273,11 +273,11 @@ twitterfetch = function(input, callback){
 	       }
 	      }
 	      //console.log(error, returnArr);
-	      values = {}
-	      values.latestID = latestIDValue
-	      values.searchedTerm = input.searchTerm
-	      values.networkSearched = "twitter"
-	      values.eventID = input.eventID
+	      values = {};
+	      values.latestID = latestIDValue;
+	      values.searchedTerm = input.searchTerm;
+	      values.networkSearched = "twitter";
+	      values.eventID = input.eventID;
 	      returnArr.push(postsArr);
 	      //console.log(postsArr);
 	      returnArr.push(values);
@@ -297,10 +297,10 @@ instagramfetch = function (input, callback)  {
     var i3 = 0;
     var searchTerm = "";
     var error;
-   	var latestIDValue = 0
-   	var fetched = 0
+   	var latestIDValue = 0;
+   	var fetched = 0;
 	if (input.latestID > 0){
-	    var latestIDValue = input.latestID;
+	    latestIDValue = input.latestID;
 	}
     if (input.searchTerm){
       var searchTermArray = input.searchTerm.split(" ");
@@ -344,15 +344,15 @@ instagramfetch = function (input, callback)  {
         console.log(input.latestID);
           if (body.pagination.min_tag_id > input.latestID || !input.latestID ){
             for (var i in body.data) {
-            	console.log("Entering Vine Loop")
+            	console.log("Entering Vine Loop");
            		if (body.data[i].id > latestIDValue){
 	            	latestIDValue = body.data[i].id;
 	        	}
 	        	if (input.fetchCount == fetched) {
-	        		console.log("breaking")
+	        		console.log("breaking");
 	        		break; 
 	        	}
-	        	fetched ++
+	        	fetched ++;
             	var postHasVideo = false;
             	var postHasImage = false;
             	var postImagePreviewURL = '';
@@ -386,15 +386,15 @@ instagramfetch = function (input, callback)  {
             }
           }
     }
-    var values = {}
+    var values = {};
     if (postsArr.length > 0){
-          values.latestID = body.pagination.min_tag_id
+          values.latestID = body.pagination.min_tag_id;
     } else {
-          values.latestID = input.latestID
+          values.latestID = input.latestID;
     }
-    values.searchedTerm = input.searchTerm
-    values.networkSearched = "instagram"
-    values.eventID = input.eventID
+    values.searchedTerm = input.searchTerm;
+    values.networkSearched = "instagram";
+    values.eventID = input.eventID;
     var returnArr = [];
     returnArr.push(postsArr);
     returnArr.push(values);
@@ -421,10 +421,10 @@ vinefetch = function (input, callback)  {
     var min_tag_id = 0;
     var searchTerm = "";
     var error;
-   	var latestIDValue = 0
-   	var fetched = 0
+   	var latestIDValue = 0;
+   	var fetched = 0;
 	if (input.latestID > 0){
-	    var latestIDValue = input.latestID;
+	    latestIDValue = input.latestID;
 	}
     if (input.searchTerm){
       var searchTermArray = input.searchTerm.split(" ");
@@ -433,7 +433,7 @@ vinefetch = function (input, callback)  {
         }
     }
 
-      var tempURL = 'https://api.vineapp.com/timelines/tags/' + searchTerm
+      var tempURL = 'https://api.vineapp.com/timelines/tags/' + searchTerm;
         request.get({
           url: tempURL,
           json: true,
@@ -466,10 +466,10 @@ vinefetch = function (input, callback)  {
 	                    latestIDValue = body.data.records[i].postId;
 	                  }
 	                  	if (input.fetchCount == fetched) {
-	        				console.log("breaking")
+	        				console.log("breaking");
 	        				break; 
 	        			}
-	        			fetched ++
+	        			fetched ++;
 	                  var postHasVideo = true;
 	                  var postHasImage = false;
 	                  var postImagePreviewURL = '';
@@ -506,11 +506,11 @@ vinefetch = function (input, callback)  {
 	          }
 	    }
 	}
-	var values = {}
-	values.latestID = latestIDValue
-	values.searchedTerm = input.searchTerm
-	values.networkSearched = "vine"
-	values.eventID = input.eventID
+	var values = {};
+	values.latestID = latestIDValue;
+	values.searchedTerm = input.searchTerm;
+	values.networkSearched = "vine";
+	values.eventID = input.eventID;
 	var returnArr = [];
 	returnArr.push(postsArr);
 	returnArr.push(values);

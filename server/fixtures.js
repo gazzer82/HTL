@@ -1,5 +1,5 @@
 if (HTLEvents.find().count() === 0) {
-      console.log("No events found, inserting defaults.")
+      console.log("No events found, inserting defaults.");
       HTLEvents.insert({
           eventName: "macmillan",
           twitterEnabled: true,

@@ -28,7 +28,7 @@ if (Meteor.isServer) {
         var eventsToFetch = 0;
         var eventsFetched = 0;
         if (!eventList){
-          throw(err)
+          throw(err);
         } else {
           eventsToFetch = eventList.length;
           for (var eventi in eventList){
@@ -36,7 +36,7 @@ if (Meteor.isServer) {
             socialfetch.fetch(eventList[eventi], Meteor.bindEnvironment(function(err, returnValue){
               if (err.length) {
                 console.log(err.length + " errors located");
-                for (i in err){
+                for (var i in err){
                   console.log(err[i]);
                   Meteor.call('fetchErrorsInsert', err[i], function(error, result){
                   if(error)
@@ -84,24 +84,24 @@ if (Meteor.isServer) {
       //We have been sent an array of events, which contain the returned posts so let's process them.
       console.log("We have " + events.length + " events to process");
       //Ok so let's start looping through the events 1 at a time.
-      for (i in events){
+      for (var i in events){
         //Ok so now we need to process this event, let's loop through each terms returned posts.
         console.log("We have " + events[i].length + " terms to process");
-        for (i2 in events[i]){
+        for (var i2 in events[i]){
           //Ok first off let's update the latest fetched ID for this search term.
 
           Meteor.call('updateTermID', events[i][i2][1], function (err, value) {
               if (err){
-                throw(err)
+                throw(err);
               }
           });
 
           //Now lets loop through and add the posts for this term and network to Mongo
-          for (i3 in events[i][i2][0]) {
+          for (var i3 in events[i][i2][0]) {
             //Let's add each post to the database.
             Meteor.call('socialPostsInsert', events[i][i2][0][i3], function(err, result){
               if (err){
-                throw(err)
+                throw(err);
               }
             });
           }
@@ -109,7 +109,7 @@ if (Meteor.isServer) {
           //console.log("Searched Object = " + util.inspect(searchObject, false, null));
         }
       }
-      return
+      return;
     },
     updateTermID: function(eventTerm) {
       //So checking to see which network it is that we've got posts from, and updating the lastes ID for that term/network

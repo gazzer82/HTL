@@ -1,0 +1,18 @@
+Plugin Install Dokku MongoDB
+
+-- Build MongoDB Image
+MongoDB Version: 2.6.3
+db_image: jeffutter/mongodb
+previous_mongo_install= false
+
+-- Run Setup
+id: 645ae8fb9fa9726b9d7a1d4173ce841138a8f4dd8eafc9bfb374fad9f4588781
+mongodb_ip: 127.0.0.1
+mongodb_port: 32768
+
+-- Connecting to server and creating admin user
+
+-- Try [createUser] to create admin
+Admin user created successfully
+
+Plugin Install Dokku MongoDB Completed
