@@ -172,7 +172,7 @@ fetchIndividual = function(type, searchTerm, fetchCount, latestID, eventID, call
 twitterfetch = function(input, callback){
 	//Import NPM's
 	var Twitter = Npm.require('twitter');
-	var OAuth2 = Npm.require('OAuth').OAuth2;
+	var OAuth2 = Npm.require('oauth').oauth2;
 	var https = Npm.require('https');
 	var util = Npm.require('util');
 
