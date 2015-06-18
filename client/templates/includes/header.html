@@ -13,7 +13,9 @@
       	<ul class="nav navbar-nav">
       	</ul>
       	<ul class="nav navbar-nav navbar-right">
-      		{{>loginButtons}}
+          {{#if currentUser}}
+      		  {{>loginButtons}}
+          {{/if}}
       	</ul>
       </div>
     </nav>
