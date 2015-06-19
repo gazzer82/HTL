@@ -4,7 +4,7 @@
     {
       "host": "htl.dcloud.space",
       "username": "root",
-      "password": "Rbk8064orb01"
+      "password": "vertbaudet"
       // or pem file (ssh based authentication)
       //"pem": "~/.ssh/id_rsa"
     }
