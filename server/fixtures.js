@@ -23,3 +23,12 @@ if (HTLEvents.find().count() === 0) {
           ]
     });
 }
+
+if(Meteor.users.find().count() === 0) {
+    var options = {
+      username: 'admin', 
+      password: 'vertbaudet', 
+      email: 'admin@htl.com'
+    };
+    Accounts.createUser(options);
+}
