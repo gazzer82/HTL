@@ -30,7 +30,7 @@
   "appName": "htl",
 
   // Location of app (local directory)
-  "app": "~/htl",
+  "app": "/Users/garethjeanne/htl",
 
   // Configure environment
   "env": {
