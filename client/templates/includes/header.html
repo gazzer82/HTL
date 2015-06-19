@@ -1,32 +1,34 @@
 <template name="header">
-    <nav class="navbar navbar-default" role="navigation"> 
-      <div class="navbar-header">
-      	<button type="button" class="navbar-toggle collapsed" data-toggle="colapse" data-target="#navigation">
-      		<span class="sr-only">Toggle navigation</span>
-      		<span class="icon-bar"></span>
-      		<span class="icon-bar"></span>
-      		<span class="icon-bar"></span>
-      	</button>
-        <a class="navbar-brand" href="{{pathFor 'socialPostsList'}}">HTL</a>
-      </div>
-      <div class="collapse navbar-collapse" id="navigation">
-      	<ul class="nav navbar-nav">
-          {{#if currentUser}}
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Filter <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">New</a></li>
-                <li><a href="#">Approved</a></li>
-                <li><a href="#">Deleted</a></li>
-              </ul>
-            </li>
-          {{/if}}
-      	</ul>
-      	<ul class="nav navbar-nav navbar-right">
-          {{#if currentUser}}
-      		  {{>loginButtons}}
-          {{/if}}
-      	</ul>
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+        	<button type="button" class="navbar-toggle collapsed" data-toggle="colapse" data-target="#navigation">
+        		<span class="sr-only">Toggle navigation</span>
+        		<span class="icon-bar"></span>
+        		<span class="icon-bar"></span>
+        		<span class="icon-bar"></span>
+        	</button>
+          <a class="navbar-brand" href="{{pathFor 'socialPostsList'}}">HTL</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navigation">
+        	<ul class="nav navbar-nav">
+            {{#if currentUser}}
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Filter <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">New</a></li>
+                  <li><a href="#">Approved</a></li>
+                  <li><a href="#">Deleted</a></li>
+                </ul>
+              </li>
+            {{/if}}
+        	</ul>
+        	<ul class="nav navbar-nav navbar-right">
+            {{#if currentUser}}
+        		  {{>loginButtons}}
+            {{/if}}
+        	</ul>
+        </div>
       </div>
     </nav>
 </template>
