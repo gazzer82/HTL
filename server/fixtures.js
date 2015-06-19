@@ -6,7 +6,7 @@ if (HTLEvents.find().count() === 0) {
           instagramEnabled: false,
           vineEnabled: false,
           fetchCount: 2,
-          enabled: true,
+          enabled: false,
           searchTerms: [
             {
               term: "badger",
