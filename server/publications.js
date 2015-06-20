@@ -10,6 +10,10 @@ Meteor.publish('socialPosts', function(filter) {
    	}
 });
 
+Meteor.publish('users', function(filter) {
+      return  users.find();
+});
+
 Meteor.methods({
   approvePost: function (postID) {
     socialPosts.update(postID, {$set: {postStatus: "approved"}});
