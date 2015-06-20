@@ -17,4 +17,4 @@ Meteor.methods({
   deletePost: function (postID) {
     socialPosts.update(postID, {$set: {postStatus: "deleted"}});
   }
-})
+});
