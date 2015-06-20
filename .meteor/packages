@@ -8,7 +8,6 @@ meteor-platform
 percolate:synced-cron
 gazzer82:socialfetch
 meteorhacks:kadira
-houston:admin
 iron:router
 twbs:bootstrap
 underscore
@@ -23,3 +22,5 @@ alanning:roles
 random
 cmather:handlebars-server
 raix:handlebar-helpers
+aldeed:collection2
+aldeed:autoform

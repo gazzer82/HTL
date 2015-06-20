@@ -10,87 +10,91 @@ socialfetch = {
 		var errors = [];
 		var callbackTarget = 0;
 		var callbackCount = 0;
-		if (defaultData.twitterEnabled){
-			callbackTarget += defaultData.searchTerms.length;
-		}
-		if (defaultData.instagramEnabled){
-			callbackTarget += defaultData.searchTerms.length;
-		}
-		if (defaultData.vineEnabled){
-			callbackTarget += defaultData.searchTerms.length;
-		}
-		for (var term in defaultData.searchTerms) {
-			termObject = defaultData.searchTerms[term];
-			if (defaultData.twitterEnabled) {
-				/*jshint loopfunc: true */
-				fetchIndividual('twitter', termObject.term, defaultData.fetchCount, termObject.latestTwitter, defaultData._id, function(err, data) {
-					callbackCount ++;
-					console.log("callbackCount = " + callbackCount);
-					console.log("callbackTarget = " + callbackTarget);
-					if (err) {
-						error = {
-							service:'twitter',
-							term:data[1].searchedTerm,
-							error: err
-						};
-						errors.push(error);
-					} else {
-						returnData.push(data);
-					}
-					if (callbackCount == callbackTarget){
-						console.log("all done fetching so calling callback");
-						callback(errors, returnData);
-					}
-					//console.log(returnData);
-				});
+		if (defaultData.searchTerms){
+			if (defaultData.twitterEnabled){
+				callbackTarget += defaultData.searchTerms.length;
 			}
-			if (defaultData.instagramEnabled) {
-				/*jshint loopfunc: true */
-				fetchIndividual('instagram', termObject.term, defaultData.fetchCount, termObject.latestInstagram, defaultData._id, function(err, data) {
-					callbackCount ++;
-					console.log("callbackCount = " + callbackCount);
-					console.log("callbackTarget = " + callbackTarget);
-					if (err) {
-						error = {
-							service:'instagram',
-							term: data[1].searchedTerm,
-							error: err
-						};
-						errors.push(error);
-					} else {
-						returnData.push(data);
-					}
-					if (callbackCount == callbackTarget){
-						console.log("all done fetching so calling callback");
-						callback(errors, returnData);
-					}
-					//console.log(returnData);
-				});
+			if (defaultData.instagramEnabled){
+				callbackTarget += defaultData.searchTerms.length;
 			}
-			if (defaultData.vineEnabled) {
-				/*jshint loopfunc: true */
-				fetchIndividual('vine', termObject.term, defaultData.fetchCount, termObject.latestVine, defaultData._id, function(err, data) {
-					callbackCount ++;
-					console.log("callbackCount = " + callbackCount);
-					console.log("callbackTarget = " + callbackTarget);
-					if (err) {
-						error = {
-							service: 'vine',
-							term: data[1].searchedTerm,
-							error: err
-						};
-						errors.push(error);
-					} else {
-						returnData.push(data);
-					}
-					if (callbackCount == callbackTarget){
-						console.log("all done fetching so calling callback");
-						callback(errors, returnData);
-					}
-					//console.log(returnData);
-				});
+			if (defaultData.vineEnabled){
+				callbackTarget += defaultData.searchTerms.length;
 			}
-			//console.log(defaultData.searchTerms[term].term);
+			for (var term in defaultData.searchTerms) {
+				termObject = defaultData.searchTerms[term];
+				if (defaultData.twitterEnabled) {
+					/*jshint loopfunc: true */
+					fetchIndividual('twitter', termObject.term, defaultData.fetchCount, termObject.latestTwitter, defaultData._id, function(err, data) {
+						callbackCount ++;
+						console.log("callbackCount = " + callbackCount);
+						console.log("callbackTarget = " + callbackTarget);
+						if (err) {
+							error = {
+								service:'twitter',
+								term:data[1].searchedTerm,
+								error: err
+							};
+							errors.push(error);
+						} else {
+							returnData.push(data);
+						}
+						if (callbackCount == callbackTarget){
+							console.log("all done fetching so calling callback");
+							callback(errors, returnData);
+						}
+						//console.log(returnData);
+					});
+				}
+				if (defaultData.instagramEnabled) {
+					/*jshint loopfunc: true */
+					fetchIndividual('instagram', termObject.term, defaultData.fetchCount, termObject.latestInstagram, defaultData._id, function(err, data) {
+						callbackCount ++;
+						console.log("callbackCount = " + callbackCount);
+						console.log("callbackTarget = " + callbackTarget);
+						if (err) {
+							error = {
+								service:'instagram',
+								term: data[1].searchedTerm,
+								error: err
+							};
+							errors.push(error);
+						} else {
+							returnData.push(data);
+						}
+						if (callbackCount == callbackTarget){
+							console.log("all done fetching so calling callback");
+							callback(errors, returnData);
+						}
+						//console.log(returnData);
+					});
+				}
+				if (defaultData.vineEnabled) {
+					/*jshint loopfunc: true */
+					fetchIndividual('vine', termObject.term, defaultData.fetchCount, termObject.latestVine, defaultData._id, function(err, data) {
+						callbackCount ++;
+						console.log("callbackCount = " + callbackCount);
+						console.log("callbackTarget = " + callbackTarget);
+						if (err) {
+							error = {
+								service: 'vine',
+								term: data[1].searchedTerm,
+								error: err
+							};
+							errors.push(error);
+						} else {
+							returnData.push(data);
+						}
+						if (callbackCount == callbackTarget){
+							console.log("all done fetching so calling callback");
+							callback(errors, returnData);
+						}
+						//console.log(returnData);
+					});
+				}
+				//console.log(defaultData.searchTerms[term].term);
+			}
+		} else {
+			console.log('No search terms setup for this event');
 		}
 	}
 };
