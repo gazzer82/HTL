@@ -33,6 +33,6 @@ if(Meteor.users.find().count() === 0) {
     Accounts.createUser(options);
 }
 
-var user = Meteor.users.findOne()
+var user = Meteor.users.findOne();
 
 Roles.addUsersToRoles(user._id, 'admin', Roles.GLOBAL_GROUP);
