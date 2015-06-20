@@ -11,10 +11,12 @@ Template.postItem.helpers({
 });
 
 Template.postItem.events({
-  'click .approvePost' : function (event) {
+  'click .approvePost' : function (e) {
+  	e.preventDefault();
     Meteor.call('approvePost', this._id);
   },
-    'click .deletePost' : function (event) {
+    'click .deletePost' : function (e) {
+    e.preventDefault();
     Meteor.call('deletePost', this._id);
   }
 });

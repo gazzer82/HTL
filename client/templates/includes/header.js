@@ -1,11 +1,14 @@
 Template.header.events({
-  'click .newPosts' : function (event) {
+  'click .newPosts' : function (e) {
+    e.preventDefault();
     Session.set('postFilter', 'new');
   },
-    'click .approvedPosts' : function (event) {
+    'click .approvedPosts' : function (e) {
+    e.preventDefault();
     Session.set('postFilter', 'approved');
   },
-    'click .deletedPosts' : function (event) {
+    'click .deletedPosts' : function (e) {
+    e.preventDefault();
     Session.set('postFilter', 'deleted');
   }
 });
