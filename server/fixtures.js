@@ -32,3 +32,5 @@ if(Meteor.users.find().count() === 0) {
     };
     Accounts.createUser(options);
 }
+
+Roles.addUsersToRoles('CWnqdMKNFwa4Jz54D', 'admin', Roles.GLOBAL_GROUP);

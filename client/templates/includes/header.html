@@ -20,6 +20,9 @@
             {{/if}}
           </ul>
           <ul class="nav navbar-nav navbar-right">
+            {{#if isInRole 'admin'}}
+              <li class="admin"><a href="/admin">Admin Console</a></li>
+            {{/if}}
             {{#if currentUser}}
               {{> loginButtons}}
             {{/if}}
