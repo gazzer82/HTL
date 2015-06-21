@@ -16,10 +16,8 @@ Template.header.events({
 Template.header.helpers({
   menuActive: function(item) {
     if (item == Session.get('postFilter')){
-      console.log('Its not the same');
       return true;
     } else {
-      console.log('It is the same');
       return false;
     }
   }

@@ -5,7 +5,7 @@ Template.socialPostsList.helpers({
 });
 
 if (!Session.get('postFilter')){
-	Session.set('postFilter', 'approved');
+	Session.set('postFilter', 'new');
 }
 
 Deps.autorun(function() {
