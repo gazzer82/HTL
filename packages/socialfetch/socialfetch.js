@@ -421,7 +421,7 @@ vinefetch = function (input, callback)  {
 	var request = Npm.require('request');
 	var Twitter = Npm.require('twitter');
 	//var Twitter = require('../../node-modules/node-twitter/lib/twitter.js');
-	var OAuth2 = Npm.require('OAuth').OAuth2;
+	var OAuth2 = Npm.require('oauth').OAuth2;
 	var https = Npm.require('https');
 
     var postsArr = [];
