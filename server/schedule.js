@@ -9,7 +9,7 @@ if (Meteor.isServer) {
     name: 'Creating recurring social media fetch CRON Job',
     schedule: function(parser) {
       // parser is a later.parse object
-      return parser.text('every 5 minutes');
+      return parser.text('every 30 seconds');
   },
   job: function(intendedAt) {
       //Load the NPM's required

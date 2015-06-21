@@ -10,6 +10,7 @@ socialfetch = {
 		var errors = [];
 		var callbackTarget = 0;
 		var callbackCount = 0;
+		var util = Npm.require('util');
 		if (defaultData.searchTerms){
 			if (defaultData.twitterEnabled){
 				callbackTarget += defaultData.searchTerms.length;
@@ -85,7 +86,8 @@ socialfetch = {
 							returnData.push(data);
 						}
 						if (callbackCount == callbackTarget){
-							console.log("all done fetching so calling callback");
+							console.log("all done fetching vine so calling callback");
+							console.log(util.inspect(returnData, false, null));
 							callback(errors, returnData);
 						}
 						//console.log(returnData);
@@ -500,7 +502,9 @@ vinefetch = function (input, callback)  {
 	                    postType: 'vine',
 
 	                    postStatusDate: n,
-	                        
+	                    
+	                    postHasImage: postHasImage,
+	                    postHasVideo: postHasVideo,    
 	                    postImagePreviewURL: body.data.records[i].thumbnailUrl,
 	                    postImageURL: body.data.records[i].thumbnailUrl,
 	                    postVideoPreviewURL: body.data.records[i].videoLowURL,
