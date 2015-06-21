@@ -137,3 +137,7 @@ body {
   90% {opacity: 1;}
   100% {opacity: 0;}
 }
+
+.postimage {
+  width: 100%;
+}

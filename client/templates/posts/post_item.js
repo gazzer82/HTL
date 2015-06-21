@@ -1,13 +1,18 @@
 Template.postItem.helpers({
-  ownPost: function() {
-  	console.log(this.userId + Meteor.userId());
-    return this.userId === Meteor.userId();
-  },
-  domain: function() {
-    var a = document.createElement('a');
-    a.href = this.url;
-    return a.hostname;
-  }
+	hasImageCall: function() {
+    	if (this.postHasImage === true){
+      		return true;
+    	} else {
+      		return false;
+    	}
+  	},
+  	hasVideoCall: function() {
+    	if (this.postHasVideo === true){
+      		return true;
+    	} else {
+      		return false;
+    	}
+  	}
 });
 
 Template.postItem.events({

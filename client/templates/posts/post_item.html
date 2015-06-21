@@ -2,6 +2,16 @@
   <div class="socialPost">
     <div class="socialPost-content">
       <h3>@{{postUserName}} </h3><span> <h6> {{postDate}} </h6></span>
+      	{{#if hasImageCall}}
+      		<div>
+  				<img src='{{postImageURL}}' class="img-responsive center-block thumbnail postimage" alt="Image" />
+			</div>
+		{{/if}}
+      	{{#if hasVideoCall}}
+      		<div>
+  				VIDEO
+			</div>
+		{{/if}}
       <p>
       	{{postText}}
       </p>
