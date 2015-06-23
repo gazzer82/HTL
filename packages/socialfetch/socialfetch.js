@@ -25,7 +25,7 @@ socialfetch = {
 				termObject = defaultData.searchTerms[term];
 				if (defaultData.twitterEnabled) {
 					/*jshint loopfunc: true */
-					fetchIndividual('twitter', termObject.term, defaultData.fetchCount, termObject.latestTwitter, defaultData._id, function(err, data) {
+					fetchIndividual('twitter', termObject.term, defaultData.fetchCount, termObject.latestTwitter, defaultData._id, defaultData.eventName, function(err, data) {
 						callbackCount ++;
 						console.log("callbackCount = " + callbackCount);
 						console.log("callbackTarget = " + callbackTarget);
@@ -48,7 +48,7 @@ socialfetch = {
 				}
 				if (defaultData.instagramEnabled) {
 					/*jshint loopfunc: true */
-					fetchIndividual('instagram', termObject.term, defaultData.fetchCount, termObject.latestInstagram, defaultData._id, function(err, data) {
+					fetchIndividual('instagram', termObject.term, defaultData.fetchCount, termObject.latestInstagram, defaultData._id, defaultData.eventName, function(err, data) {
 						callbackCount ++;
 						console.log("callbackCount = " + callbackCount);
 						console.log("callbackTarget = " + callbackTarget);
@@ -71,7 +71,7 @@ socialfetch = {
 				}
 				if (defaultData.vineEnabled) {
 					/*jshint loopfunc: true */
-					fetchIndividual('vine', termObject.term, defaultData.fetchCount, termObject.latestVine, defaultData._id, function(err, data) {
+					fetchIndividual('vine', termObject.term, defaultData.fetchCount, termObject.latestVine, defaultData._id, defaultData.eventName, function(err, data) {
 						callbackCount ++;
 						console.log("callbackCount = " + callbackCount);
 						console.log("callbackTarget = " + callbackTarget);
@@ -103,7 +103,7 @@ socialfetch = {
 
 
 
-fetchIndividual = function(type, searchTerm, fetchCount, latestID, eventID, callback) {
+fetchIndividual = function(type, searchTerm, fetchCount, latestID, eventID, eventName, callback) {
 		//var Twitter = require('twitter_fetch.js')
 		//var Instagram = require('instagram_fetch.js')
 		//var Vine = require('vine_fetch.js')
@@ -124,7 +124,8 @@ fetchIndividual = function(type, searchTerm, fetchCount, latestID, eventID, call
 		              searchTerm: searchTerm,
 		              fetchCount: fetchCount,
 		              latestID: latestID,
-		              eventID: eventID
+		              eventID: eventID,
+		              eventName: eventName
 		            };
 		            twitterfetch(twitterVals, function(err, returnValue) {
 		              if(err){
@@ -141,7 +142,8 @@ fetchIndividual = function(type, searchTerm, fetchCount, latestID, eventID, call
 		              fetchCount: fetchCount,
 		              latestID: latestID,
 		              clientID: instagramClientID,
-		              eventID: eventID
+		              eventID: eventID,
+		              eventName: eventName
 		            };
 		            instagramfetch(instagramVals, function(err, returnValue) {
 		              if(err){
@@ -157,7 +159,8 @@ fetchIndividual = function(type, searchTerm, fetchCount, latestID, eventID, call
 		              searchTerm: searchTerm,
 		              fetchCount: fetchCount,
 		              latestID: latestID,
-		              eventID: eventID
+		              eventID: eventID,
+		              eventName: eventName
 		            };
 		            vinefetch(vineVals, function(err, returnValue) {
 		              if(err){
@@ -221,6 +224,7 @@ twitterfetch = function(input, callback){
 	            var postVideoPreviewURL = '';
 	            var postVideoURL = '';
 	            var postEventID = input.eventID;
+	            var postEventName = input.eventName;
 
 	            //if (body.statuses[i].id > input.latestID){
 	            //  since_id_return = body.statuses[i].id;
@@ -258,9 +262,9 @@ twitterfetch = function(input, callback){
 	              postText: body.statuses[i].text,
 	              postID: body.statuses[i].id,
 	              postEventID: postEventID,
+	              postEventName: postEventName,
 	              postStatus: 'new',
 	              postDate: moment(body.statuses[i].created_at).format(),
-	              //postDate: body.statuses[i].created_at,
 	              postScanned: postScanned,
 	              postScheduleDate: '',
 	              postUserImageURL: body.statuses[i].user.profile_image_url,
@@ -370,9 +374,11 @@ instagramfetch = function (input, callback)  {
             	var postVideoURL = '';
             	var postScanned = false;
             	var postEventID = input.eventID;
+            	var postEventName = input.eventName;
 	            postsArr.push({
 		            postID: body.data[i].id,
 		            postEventID: postEventID,
+		            postEventName: postEventName,
 		            postText: body.data[i].caption.text,
 		            postStatus: 'new',
 		            postDate: moment.unix(body.data[i].created_time).format(),
@@ -487,9 +493,11 @@ vinefetch = function (input, callback)  {
 	                  var postVideoURL = '';
 	                  var postScanned = false;
 	                  var postEventID = input.eventID;
+	                  var postEventName = input.eventName;
 	                  postsArr.push({
 	                    postID: body.data.records[i].postId,
 	                    postEventID: postEventID,
+	                    postEventName: postEventName,
 	                    postText: body.data.records[i].description,
 	                    postStatus: 'new',
 	                    postDate: moment(body.data.records[i].created).format(),
