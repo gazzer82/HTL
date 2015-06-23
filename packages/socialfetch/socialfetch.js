@@ -217,8 +217,8 @@ twitterfetch = function(input, callback){
 	      var n = d.toISOString();
 	      for (var i in body.statuses) {
 
-	            var postHasVideo = 'false';
-	            var postHasImage = 'false';
+	            var postHasVideo = false;
+	            var postHasImage = false;
 	            var postImagePreviewURL = '';
 	            var postImageURL = '';
 	            var postVideoPreviewURL = '';
@@ -236,14 +236,14 @@ twitterfetch = function(input, callback){
 
 	            if (body.statuses[i].entities.media) {
 	              if (body.statuses[i].entities.media[0].type == 'photo') {
-	                  postHasImage = 'true';
+	                  postHasImage = true;
 	                  postImagePreviewURL = body.statuses[i].entities.media[0].media_url + ':small';
 	                  postImageURL = body.statuses[i].entities.media[0].media_url;
 	              }
 
 	              if(body.statuses[i].entities.media[0].type == 'video') {
-	                  postHasVideo = 'true';
-	                  postHasImage = 'true';
+	                  postHasVideo = true;
+	                  postHasImage = true;
 	                  postImagePreviewURL = body.statuses[i].entities.media[0].media_url + ':small';
 	                  postImageURL = body.statuses[i].entities.media[0].media_url;
 	                  postVideoPreviewURL = body.statuses[i].entities.media[0].variants[0].url;
@@ -273,7 +273,6 @@ twitterfetch = function(input, callback){
 	              postUpdateUser: '',
 	              postType: 'twitter',
 	              postStatusDate: n,
-	              
 	              postHasVideo: postHasVideo,
 	              postHasImage: postHasImage,
 	              postImagePreviewURL: postImagePreviewURL,
@@ -365,12 +364,23 @@ instagramfetch = function (input, callback)  {
 	        		break; 
 	        	}
 	        	fetched ++;
+
             	var postHasVideo = false;
+            	var postVideoPreviewURL = '';
+            	var postVideoURL = '';
             	var postHasImage = false;
             	var postImagePreviewURL = '';
             	var postImageURL = '';
-            	var postVideoPreviewURL = '';
-            	var postVideoURL = '';
+            	if (body.data[i].videos) {
+            		postHasVideo = true,
+            		postVideoPreviewURL = body.data[i].videos.low_resolution.url,
+            		postVideoURL = body.data[i].videos.standard_resolution.url;
+            	}
+            	if (body.data[i].images) {
+            		postHasImage = true,
+            		postImagePreviewURL = body.data[i].images.low_resolution.url,
+            		postImageURL = body.data[i].images.standard_resolution.url;
+            	}
             	var postScanned = false;
             	var postEventID = input.eventID;
             	var postEventName = input.eventName;
@@ -389,11 +399,10 @@ instagramfetch = function (input, callback)  {
 		            postType: 'instagram',
 		            postScanned: false,
 		            postStatusDate: n,
-		                    
 		            postHasVideo: postHasVideo,
-		            postHasImage: true,
-		            postImagePreviewURL: body.data[i].images.low_resolution.url,
-		            postImageURL: body.data[i].images.standard_resolution.url,
+		            postHasImage: postHasImage,
+		            postImagePreviewURL: postImagePreviewURL,
+		            postImageURL: postImageURL,
 		            postVideoPreviewURL: postVideoPreviewURL,
 		            postVideoURL: postVideoURL
 	            });
@@ -448,7 +457,7 @@ vinefetch = function (input, callback)  {
     }
 
       var tempURL = 'https://api.vineapp.com/timelines/tags/' + searchTerm;
-        request.get({
+      request.get({
           url: tempURL,
           json: true,
       },
@@ -473,7 +482,7 @@ vinefetch = function (input, callback)  {
 	        var d = new Date();
 	        var n = d.toISOString();
 	          //callback(response);
-	          if (body.data.records){
+	          if (body.data){
 	              for (var i in body.data.records) {
 	                if (body.data.records[i].postId > input.latestID || !input.latestID){
 	                  if (body.data.records[i].postId > latestIDValue){
@@ -508,9 +517,8 @@ vinefetch = function (input, callback)  {
 	                    postUpdateUser: '',
 	                    postType: 'vine',
 	                    postStatusDate: n,
-	                    
-	                    postHasImage: postHasImage,
-	                    postHasVideo: postHasVideo,    
+	                    postHasImage: true,
+	                    postHasVideo: true,    
 	                    postImagePreviewURL: body.data.records[i].thumbnailUrl,
 	                    postImageURL: body.data.records[i].thumbnailUrl,
 	                    postVideoPreviewURL: body.data.records[i].videoLowURL,

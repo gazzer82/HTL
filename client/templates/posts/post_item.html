@@ -3,22 +3,23 @@
     <div class="socialPost-content">
       <span class="username date"><h3>@{{postUserName}}</h3></span><span><h6>{{postDate}} </h6></span>
       <span>{{postEventName}}</span>
-      	{{#if hasImageCall}}
-      		<div>
-  				<img src='{{postImageURL}}' class="img-responsive center-block postimage" alt="Image" />
-			</div>
-		{{/if}}
       	{{#if hasVideoCall}}
       		<div>
-  				<video id="{{_id}}" class="video-js vjs-default-skin"
-  					controls preload="auto" width="100%" height="auto"
-  					poster="{{postImageURL}}"
-  					data-setup='{"example_option":true}'>
- 					<source src="{{postVideoURL}}" type='video/mp4' />
- 					<p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
-				</video>
-			</div>
-		{{/if}}
+  				  <video id="{{_id}}" class="video-js vjs-default-skin"
+  					 controls preload="auto" width="100%" height="auto"
+  					 poster="{{postImageURL}}"
+  					 data-setup='{"example_option":true}'>
+ 					  <source src="{{postVideoURL}}" type='video/mp4' />
+ 					  <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+				    </video>
+			     </div>
+		    {{else}}
+          {{#if hasImageCall}}
+            <div>
+            <img src='{{postImageURL}}' class="img-responsive center-block postimage" alt="Image" />
+            </div>
+          {{/if}}
+        {{/if}}
       <p>
       	{{postText}}
       </p>
