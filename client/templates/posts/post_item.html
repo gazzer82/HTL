@@ -1,7 +1,8 @@
 <template name="postItem">
   <div class="socialPost">
     <div class="socialPost-content">
-      <h3>@{{postUserName}} </h3><span> <h6> {{postDate}} </h6></span>
+      <span class="username date"><h3>@{{postUserName}}</h3></span><span><h6>{{postDate}} </h6></span>
+      <span>{{postEventName}}</span>
       	{{#if hasImageCall}}
       		<div>
   				<img src='{{postImageURL}}' class="img-responsive center-block postimage" alt="Image" />

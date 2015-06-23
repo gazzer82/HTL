@@ -1,6 +1,6 @@
 Template.socialPostsList.helpers({
   socialPosts: function() {
-  	return socialPosts.find({}, {sort: {postDate: -1}});
+	  	return socialPosts.find({}, {sort: {postDate: -1}});
   }
 });
 
@@ -9,6 +9,7 @@ if (!Session.get('postFilter')){
 }
 
 Deps.autorun(function() {
-  var filter = Session.get('postFilter');
-  Meteor.subscribe('socialPosts', filter);
+	RolesList = Roles.getRolesForUser(Meteor.userId());
+  	var filter = Session.get('postFilter');
+  	Meteor.subscribe('socialPosts', filter, RolesList);
 });

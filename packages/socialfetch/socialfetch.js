@@ -265,14 +265,13 @@ twitterfetch = function(input, callback){
 	              postEventName: postEventName,
 	              postStatus: 'new',
 	              postDate: moment(body.statuses[i].created_at).format(),
-	              postScanned: postScanned,
+	              postScanned: false,
 	              postScheduleDate: '',
 	              postUserImageURL: body.statuses[i].user.profile_image_url,
 	              postUserRealName: body.statuses[i].user.name,
 	              postUserName: body.statuses[i].user.screen_name,
 	              postUpdateUser: '',
 	              postType: 'twitter',
-
 	              postStatusDate: n,
 	              
 	              postHasVideo: postHasVideo,
@@ -388,7 +387,7 @@ instagramfetch = function (input, callback)  {
 		            postUserName: body.data[i].user.username,
 		            postUpdateUser: '',
 		            postType: 'instagram',
-
+		            postScanned: false,
 		            postStatusDate: n,
 		                    
 		            postHasVideo: postHasVideo,
@@ -501,14 +500,13 @@ vinefetch = function (input, callback)  {
 	                    postText: body.data.records[i].description,
 	                    postStatus: 'new',
 	                    postDate: moment(body.data.records[i].created).format(),
-	                    postScanned: postScanned,
+	                    postScanned: false,
 	                    postScheduleDate: '',
 	                    postUserImageURL: body.data.records[i].avatarUrl,
 	                    postUserRealName: body.data.records[i].username,
 	                    postUserName: body.data.records[i].username,
 	                    postUpdateUser: '',
 	                    postType: 'vine',
-
 	                    postStatusDate: n,
 	                    
 	                    postHasImage: postHasImage,

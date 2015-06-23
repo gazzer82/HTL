@@ -25,3 +25,7 @@ Template.postItem.events({
     Meteor.call('deletePost', this._id);
   }
 });
+
+Meteor.startup(function() {
+      Meteor.subscribe('htlevents');
+});
