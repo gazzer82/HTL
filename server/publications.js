@@ -1,12 +1,9 @@
 Meteor.publish('socialPosts', function(filter, limit, roles) {
-  console.log('fetching ' + limit + ' posts');
     var postsReturn = [];
-    //console.log(this);
     if (this.userId && Roles.userIsInRole(this.userId, ['admin'])){
       postsReturn = socialPosts.find({postStatus: filter}, { limit: limit });
     } else if (this.userId){
       RolesList = Roles.getRolesForUser(this.userId);
-      console.log(RolesList);
       postsReturn = socialPosts.find({ $and: [{postStatus: filter},{postEventName: {$in: RolesList}}]}, { limit: limit });
     }
     return postsReturn;
