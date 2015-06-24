@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "badwords": {
+      "version": "https://github.com/gazzer82/badwords/tarball/5e601b787d4043d6868f3d5d815cbdda32d98410"
+    },
+    "profanity-util": {
+      "version": "https://github.com/gazzer82/nodejs-profanity-util/tarball/ef0abba9e0b621a00f2a2be573b0448030d052bd",
+      "dependencies": {
+        "underscore": {
+          "version": "1.6.0"
+        }
+      }
+    }
+  }
+}
