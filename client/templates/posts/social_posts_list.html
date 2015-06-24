@@ -1,5 +1,21 @@
+<template name="socialPostsListNew">
+	{{> socialPostsList}}
+</template>
+
+<template name="socialPostsListApproved">
+	{{> socialPostsList}}
+</template>
+
+<template name="socialPostsListDeleted">
+	{{> socialPostsList}}
+</template>
+
 <template name="socialPostsList">
-	<div class="socialPostsList">
+	{{> Template.dynamic template=environment}}
+</template>
+
+<template name="socialPostsListWeb">
+	<div class="socialPostsListWeb">
 		{{#each socialPosts}}
 			{{> postItem}}
 		{{/each}}
@@ -9,4 +25,21 @@
     		</div>
 		{{/if}}
 	</div>
+</template>
+
+<template name="socialPostsListIonic">
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title">Hashtag Live</h1>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      {{#ionList}}
+        {{#each socialPosts}}
+          {{> postItem}}
+        {{/each}}
+      {{/ionList}}
+    {{/ionContent}}
+  {{/ionView}}
 </template>

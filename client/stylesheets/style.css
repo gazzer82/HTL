@@ -141,3 +141,8 @@ body {
 .postimage {
   width: 100%;
 }
+
+.postProfane {
+  border-style: dashed;
+  border-color: #980000;
+}

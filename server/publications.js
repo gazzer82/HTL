@@ -1,11 +1,12 @@
 Meteor.publish('socialPosts', function(filter, limit, roles) {
     var postsReturn = [];
     if (this.userId && Roles.userIsInRole(this.userId, ['admin'])){
-      postsReturn = socialPosts.find({postStatus: filter}, { limit: limit });
+      postsReturn = socialPosts.find({postStatus: filter}, {postDate: -1}, { limit: limit });
     } else if (this.userId){
       RolesList = Roles.getRolesForUser(this.userId);
-      postsReturn = socialPosts.find({ $and: [{postStatus: filter},{postEventName: {$in: RolesList}}]}, { limit: limit });
+      postsReturn = socialPosts.find({ $and: [{postStatus: filter},{postEventName: {$in: RolesList}}]}, {postDate: -1}, { limit: limit });
     }
+    postsReturn;
     return postsReturn;
 });
 

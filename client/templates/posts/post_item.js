@@ -12,7 +12,14 @@ Template.postItem.helpers({
     	} else {
       		return false;
     	}
-  	}
+  	},
+    postProfane: function() {
+      if (this.postProfane === true){
+          return true;
+      } else {
+          return false;
+      }
+    }
 });
 
 Template.postItem.events({

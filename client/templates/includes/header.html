@@ -14,9 +14,9 @@
       <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             {{#if currentUser}}
-              <li class="{{#if $.Session.equals 'postFilter' 'new'}} active{{/if}} newPosts"><a href="#">New</a></li>
-              <li class="{{#if $.Session.equals 'postFilter' 'approved'}} active{{/if}} approvedPosts"><a href="#">Approved</a></li>
-              <li class="{{#if $.Session.equals 'postFilter' 'deleted'}} active{{/if}} deletedPosts"><a href="#">Deleted</a></li>
+              <li class="{{#if $.Session.equals 'filter' 'new'}} active{{/if}} newPosts"><a href="#">New</a></li>
+              <li class="{{#if $.Session.equals 'filter' 'approved'}} active{{/if}} approvedPosts"><a href="#">Approved</a></li>
+              <li class="{{#if $.Session.equals 'filter' 'deleted'}} active{{/if}} deletedPosts"><a href="#">Deleted</a></li>
             {{/if}}
           </ul>
           <ul class="nav navbar-nav navbar-right">

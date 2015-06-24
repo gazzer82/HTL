@@ -40,11 +40,13 @@ if (Meteor.isServer) {
                 console.log(err.length + " errors located");
                 for (var i in err){
                   console.log(err[i]);
-                  Meteor.call('fetchErrorsInsert', err[i], function(error, result){
+                  throw err[i];
+                  throw error.reason;
+                  //Meteor.call('fetchErrorsInsert', err[i], function(error, result){
                   /*jshint loopfunc: true */
-                  if(error)
-                    Errors.throw(error.reason);
-                  });
+                  //if(error)
+                  //  throw(error.reason);
+                  //});
                 }
               } else if (returnValue) {
 
