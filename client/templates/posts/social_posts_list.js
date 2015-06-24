@@ -2,6 +2,8 @@ Template.socialPostsList.helpers({
   pageTitle: function() { return Session.get('pageTitle'); },
   environment: function() {
     if (Meteor.isCordova){
+      $('head').append('<link rel="stylesheet" href="ionic.css" type="text/css">');
+      $('head').append('<link rel="stylesheet" href="ionicons.css" type="text/css">');
       return "socialPostsListIonic";
     } else {
       return "socialPostsListWeb";
@@ -35,9 +37,9 @@ Template.socialPostsListIonic.helpers({
     // If, once the subscription is ready, we have less rows than we
     // asked for, we've got all the rows in the collection.
       if ((socialPosts.find().count() < Session.get("itemsLimit"))){
-        return false;
-      } else {
         return true;
+      } else {
+        return false;
       }
   }
 });
@@ -75,16 +77,22 @@ Template.socialPostsListDeleted.rendered = function () {
 Template.socialPostsListNew.rendered = function () {
     Session.set('currentTab', 'socialPostsListNew');
     Session.set('filter', 'new');
+    //$('.bar-header').hide();
+    //$('.content').removeClass('has-header');
 };
 
 Template.socialPostsListApproved.rendered = function () {
     Session.set('currentTab', 'socialPostsListApproved');
     Session.set('filter', 'approved');
+    //$('.bar-header').hide();
+    //$('.content').removeClass('has-header');
 };
 
 Template.socialPostsListDeleted.rendered = function () {
     Session.set('currentTab', 'socialPostsListDeleted');
     Session.set('filter', 'deleted');
+    //$('.bar-header').hide();
+    //$('.content').removeClass('has-header');
 };
 
 // whenever #showMoreResults becomes visible, retrieve more results
@@ -115,7 +123,7 @@ if (!Session.get('postFilter')){
 	Session.set('postFilter', 'new');
 }
 
-var ITEMS_INCREMENT = 20;
+var ITEMS_INCREMENT = 10;
 Session.setDefault('itemsLimit', ITEMS_INCREMENT);
 
 Deps.autorun(function() {

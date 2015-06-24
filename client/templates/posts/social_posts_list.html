@@ -28,17 +28,20 @@
 </template>
 
 <template name="socialPostsListIonic">
-
   {{#contentFor "headerTitle"}}
     <h1 class="title">Hashtag Live</h1>
   {{/contentFor}}
-
   {{#ionView}}
     {{#ionContent}}
       {{#ionList}}
         {{#each socialPosts}}
           {{> postItem}}
         {{/each}}
+        {{#if moreResults}}
+    		<div id="showMoreResults" style="margin-left: 25px;">
+        		<span class="loading">Loading...</span>
+    		</div>
+		{{/if}}
       {{/ionList}}
     {{/ionContent}}
   {{/ionView}}
