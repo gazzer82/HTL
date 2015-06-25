@@ -1,3 +1,9 @@
+Meteor.startup(function () {
+  if(Meteor.isCordova){
+    StatusBar.hide();
+  }
+});
+
 Template.socialPostsList.helpers({
   pageTitle: function() { return Session.get('pageTitle'); },
   environment: function() {
@@ -163,6 +169,10 @@ Template.socialPostsListIonic.onCreated(function () {
   //});
 });
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> ionic-fix
 // whenever #showMoreResults becomes visible, retrieve more results
 function showMoreVisible() {
     var threshold, target = $("#showMoreResults");
@@ -191,6 +201,12 @@ if (!Session.get('postFilter')){
 	Session.set('postFilter', 'new');
 }
 
+<<<<<<< HEAD
+=======
+var ITEMS_INCREMENT = 10;
+Session.setDefault('itemsLimit', ITEMS_INCREMENT);
+
+>>>>>>> ionic-fix
 /*Deps.autorun(function() {
 	//Meteor.subscribe('socialPosts', Session.get('itemsLimit'), filter);
 	RolesList = Roles.getRolesForUser(Meteor.userId());

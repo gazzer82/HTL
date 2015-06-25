@@ -12,26 +12,27 @@
 </template>
 
 <template name="mobile">
-    {{#ionBody}}
+  {{#ionBody}}
     	{{> ionNavBar}}
     {{#ionNavView}}
     	{{> yield}}
     {{/ionNavView}}
-
-    {{#if isAndroid}}
-      {{#ionTabs style="android"}}
-        {{> ionTab title="New" path="socialPostsListNew" icon="android-plus"}}
-        {{> ionTab title="Approved" path="socialPostsListApproved" icon="android-checkmark"}}
-        {{> ionTab title="Deleted" path="socialPostsListDeleted" icon="android-close"}}
-        {{> ionTab title="Profile" path="profile" icon="android-happy"}}
-      {{/ionTabs}}
-    {{else}}
-      {{#ionTabs style="ios"}}
-        {{> ionTab title="New" path="socialPostsListNew" iconOff="ios-plus-outline" iconOn="ios-plus" class="tab-item-positive"}}
-        {{> ionTab title="Approved" path="socialPostsListApproved" iconOff="ios-checkmark-outline" iconOn="ios-checkmark" class="tab-item-positive"}}
-        {{> ionTab title="Deleted" path="socialPostsListDeleted" iconOff="ios-close-outline" iconOn="ios-close" class="tab-item-positive"}}
-        {{> ionTab title="Profile" path="profile" iconOff="ios-person-outline" iconOn="ios-person" class="tab-item-positive"}}
-      {{/ionTabs}}
+    {{#if currentUser}}
+      {{#if isAndroid}}
+        {{#ionTabs style="android"}}
+          {{> ionTab title="New" path="socialPostsListNew" icon="android-plus"}}
+          {{> ionTab title="Approved" path="socialPostsListApproved" icon="android-checkmark"}}
+          {{> ionTab title="Deleted" path="socialPostsListDeleted" icon="android-close"}}
+          {{> ionTab title="Profile" path="profile" icon="android-happy"}}
+        {{/ionTabs}}
+      {{else}}
+        {{#ionTabs style="ios"}}
+          {{> ionTab title="New" path="socialPostsListNew" iconOff="ios-plus-outline" iconOn="ios-plus" class="tab-item-positive"}}
+          {{> ionTab title="Approved" path="socialPostsListApproved" iconOff="ios-checkmark-outline" iconOn="ios-checkmark" class="tab-item-positive"}}
+          {{> ionTab title="Deleted" path="socialPostsListDeleted" iconOff="ios-close-outline" iconOn="ios-close" class="tab-item-positive"}}
+          {{> ionTab title="Profile" path="profile" iconOff="ios-person-outline" iconOn="ios-person" class="tab-item-positive"}}
+        {{/ionTabs}}
+      {{/if}}
     {{/if}}
   {{/ionBody}}
 </template>
