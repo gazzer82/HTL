@@ -1,3 +1,9 @@
+Meteor.startup(function () {
+  if(Meteor.isCordova){
+    StatusBar.hide();
+  }
+});
+
 Template.socialPostsList.helpers({
   pageTitle: function() { return Session.get('pageTitle'); },
   environment: function() {
