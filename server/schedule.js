@@ -41,7 +41,6 @@ if (Meteor.isServer) {
                 for (var i in err){
                   console.log(err[i]);
                   throw err[i];
-                  throw error.reason;
                   //Meteor.call('fetchErrorsInsert', err[i], function(error, result){
                   /*jshint loopfunc: true */
                   //if(error)

@@ -7,6 +7,8 @@ Template.socialPostsList.helpers({
       return "socialPostsListIonic";
     } else {
       return "socialPostsListWeb";
+      //$('head').append('<link rel="stylesheet" href="ionic.css" type="text/css">');
+      //$('head').append('<link rel="stylesheet" href="ionicons.css" type="text/css">');
       //return "socialPostsListIonic";
     }
     }
@@ -44,35 +46,58 @@ Template.socialPostsListIonic.helpers({
   }
 });
 
-Template.socialPostsListNew.rendered = function () {
+/*Template.socialPostsListNew.rendered = function () {
+  console.log('new list loaded');
   Deps.autorun(function () {
     if (!this.subscription.ready()) {
-      IonLoading.show();
+      console.log('waiting for load');
+      if (Meteor.isCordova){
+        IonLoading.show();
+      }
     } else {
-      IonLoading.hide();
+      console.log('finished loading');
+      if (Meteor.isCordova){
+        IonLoading.hide();
+      }
     }
   })
 };
 
 Template.socialPostsListApproved.rendered = function () {
+  console.log('new list loaded');
   Deps.autorun(function () {
     if (!this.subscription.ready()) {
-      IonLoading.show();
+      console.log('waiting for load');
+      if (Meteor.isCordova){
+        IonLoading.show();
+      }
     } else {
-      IonLoading.hide();
+      console.log('finished loading');
+      if (Meteor.isCordova){
+        IonLoading.hide();
+      }
     }
   })
 };
 
 Template.socialPostsListDeleted.rendered = function () {
+  console.log('new list loaded');
   Deps.autorun(function () {
     if (!this.subscription.ready()) {
-      IonLoading.show();
+      console.log('waiting for load');
+      if (Meteor.isCordova){
+        IonLoading.show();
+      }
     } else {
-      IonLoading.hide();
+      console.log('finished loading');
+      if (Meteor.isCordova){
+        IonLoading.hide();
+      }
     }
   })
-};
+};*/
+
+var ITEMS_INCREMENT = 10;
 
 Template.socialPostsListNew.rendered = function () {
     Session.set('currentTab', 'socialPostsListNew');
@@ -94,6 +119,48 @@ Template.socialPostsListDeleted.rendered = function () {
     //$('.bar-header').hide();
     //$('.content').removeClass('has-header');
 };
+
+Template.socialPostsListNew.onCreated(function () {
+  // Use this.subscribe inside onCreated callback
+  Session.set('currentTab', 'socialPostsListNew');
+  Session.set('filter', 'new');
+  //RolesList = Roles.getRolesForUser(Meteor.userId());
+  //this.subscribe('socialPosts', Session.get('filter'), Session.get('itemsLimit'), RolesList);
+});
+
+Template.socialPostsListApproved.onCreated(function () {
+  // Use this.subscribe inside onCreated callback
+  Session.set('currentTab', 'socialPostsListNew');
+  Session.set('filter', 'approved');
+  //RolesList = Roles.getRolesForUser(Meteor.userId());
+  //this.subscribe('socialPosts', Session.get('filter'), Session.get('itemsLimit'), RolesList);
+});
+
+Template.socialPostsListDeleted.onCreated(function () {
+  // Use this.subscribe inside onCreated callback
+  Session.set('currentTab', 'socialPostsListNew');
+  Session.set('filter', 'deleted');
+  //RolesList = Roles.getRolesForUser(Meteor.userId());
+  //this.subscribe('socialPosts', Session.get('filter'), Session.get('itemsLimit'), RolesList);
+});
+
+Template.socialPostsListWeb.onCreated(function () {
+  // Use this.subscribe inside onCreated callback
+  //Deps.autorun(function() {
+    Session.setDefault('itemsLimit', ITEMS_INCREMENT);
+    RolesList = Roles.getRolesForUser(Meteor.userId());
+    this.subscribe('socialPosts', Session.get('filter'), Session.get('itemsLimit'), RolesList);
+  //});
+});
+
+Template.socialPostsListIonic.onCreated(function () {
+  // Use this.subscribe inside onCreated callback
+  //Deps.autorun(function() {
+    Session.setDefault('itemsLimit', ITEMS_INCREMENT);
+    RolesList = Roles.getRolesForUser(Meteor.userId());
+    this.subscribe('socialPosts', Session.get('filter'), Session.get('itemsLimit'), RolesList);
+  //});
+});
 
 // whenever #showMoreResults becomes visible, retrieve more results
 function showMoreVisible() {
@@ -123,12 +190,9 @@ if (!Session.get('postFilter')){
 	Session.set('postFilter', 'new');
 }
 
-var ITEMS_INCREMENT = 10;
-Session.setDefault('itemsLimit', ITEMS_INCREMENT);
-
-Deps.autorun(function() {
+/*Deps.autorun(function() {
 	//Meteor.subscribe('socialPosts', Session.get('itemsLimit'), filter);
 	RolesList = Roles.getRolesForUser(Meteor.userId());
   var filter = Session.get('postFilter');
   Meteor.subscribe('socialPosts', Session.get('filter'), Session.get('itemsLimit'), RolesList);
-});
+});*/

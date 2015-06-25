@@ -16,14 +16,20 @@
 
 <template name="socialPostsListWeb">
 	<div class="socialPostsListWeb">
-		{{#each socialPosts}}
-			{{> postItem}}
-		{{/each}}
-		{{#if moreResults}}
-    		<div id="showMoreResults" style="margin-left: 25px;">
-        		<span class="loading">Loading...</span>
-    		</div>
-		{{/if}}
+      {{#if Template.subscriptionsReady}}
+  			{{#each socialPosts}}
+  				{{> postItem}}
+  			{{/each}}
+  			{{#if moreResults}}
+  	    		<div id="showMoreResults" style="margin-left: 25px;">
+  	        		<span class="loading">Loading...</span>
+  	    		</div>
+  			{{/if}}
+      {{else}}
+        <div id="loading" style="margin-left: 25px;">
+          {{> spinner}}
+        </div>
+      {{/if}}
 	</div>
 </template>
 
@@ -33,16 +39,20 @@
   {{/contentFor}}
   {{#ionView}}
     {{#ionContent}}
-      {{#ionList}}
-        {{#each socialPosts}}
-          {{> postItem}}
-        {{/each}}
-        {{#if moreResults}}
-    		<div id="showMoreResults" style="margin-left: 25px;">
-        		<span class="loading">Loading...</span>
-    		</div>
-		{{/if}}
-      {{/ionList}}
+      {{#if Template.subscriptionsReady}}
+        {{#ionList}}
+          {{#each socialPosts}}
+            {{> postItem}}
+          {{/each}}
+          {{#if moreResults}}
+      		  <div id="showMoreResults" style="margin-left: 25px;">
+          		  <span class="loading">Loading...</span>
+      		  </div>
+  		    {{/if}}
+        {{/ionList}}
+      {{else}}
+        {{> spinner}}
+      {{/if}}
     {{/ionContent}}
   {{/ionView}}
 </template>
