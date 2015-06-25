@@ -2,9 +2,10 @@ Template.socialPostsList.helpers({
   pageTitle: function() { return Session.get('pageTitle'); },
   environment: function() {
     if (Meteor.isCordova){
-      $('head').append('<link rel="stylesheet" href="ionic.css" type="text/css">');
-      $('head').append('<link rel="stylesheet" href="ionicons.css" type="text/css">');
-      return "socialPostsListIonic";
+      //$('head').append('<link rel="stylesheet" href="ionic.css" type="text/css">');
+      //$('head').append('<link rel="stylesheet" href="ionicons.css" type="text/css">');
+      //return "socialPostsListIonic";
+      return "socialPostsListWeb";
     } else {
       return "socialPostsListWeb";
       //$('head').append('<link rel="stylesheet" href="ionic.css" type="text/css">');

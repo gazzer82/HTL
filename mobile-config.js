@@ -5,7 +5,7 @@ App.icons({
   'iphone_2x': 'resources/icons/icon-60x60@2x.png',
   'iphone_3x': 'resources/icons/icon-60x60@3x.png',
   'ipad': 'resources/icons/icon-76x76.png',
-  'ipad_2x': 'resources/icons/icon-76x76@2x.png',
+  'ipad_2x': 'resources/icons/icon-76x76@2x.png'
 
   // Android
   /*'android_ldpi': 'resources/icons/icon-36x36.png',
@@ -26,7 +26,7 @@ App.launchScreens({
   'ipad_portrait': 'resources/splash/splash-768x1024.png',
   'ipad_portrait_2x': 'resources/splash/splash-768x1024@2x.png',
   'ipad_landscape': 'resources/splash/splash-1024x768.png',
-  'ipad_landscape_2x': 'resources/splash/splash-1024x768@2x.png',
+  'ipad_landscape_2x': 'resources/splash/splash-1024x768@2x.png'
 
   // Android
   /*'android_ldpi_portrait': 'resources/splash/splash-200x320.png',

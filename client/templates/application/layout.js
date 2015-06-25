@@ -4,8 +4,8 @@ Template.layout.helpers({
 		if (Meteor.isCordova){
 			return "mobile";
 		} else {
-			return "web";
-			//return "mobile";
+			//return "web";
+			return "mobile";
 		}
   	}
 });

@@ -6,10 +6,10 @@
         id        = "com.phonegap.helloworld"
         version   = "1.0.0">
 
-    <name>Hahtag Live</name>
+    <name>Hashtag Live</name>
 
     <description>
-        Hastag Live mobile moderation app.
+        Hashtag Live mobile moderation app.
     </description>
 
     <author href="http://hashtaglive.com" email="support@hashtaglive.com">
