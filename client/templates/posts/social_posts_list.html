@@ -1,34 +1,8 @@
-<template name="socialPostsListNew">
-	{{> socialPostsList}}
-</template>
-
-<template name="socialPostsListApproved">
-	{{> socialPostsList}}
-</template>
-
-<template name="socialPostsListDeleted">
-	{{> socialPostsList}}
-</template>
-
-<template name="socialPostsList">
-	{{> Template.dynamic template=environment}}
-</template>
-
 <template name="socialPostsListWeb">
 	<div class="socialPostsListWeb">
-    {{#if Template.subscriptionsReady}}
-  		{{#each socialPosts}}
-  			{{> postItem}}
-  		{{/each}}
-  		{{#if moreResults}}
-      		<div id="showMoreResults" style="margin-left: 25px;">
-          		<span class="loading">Loading...</span>
-      		</div>
-  		{{/if}}
-    {{else}}
-      {{> spinner}}
-      Loading . . . 
-    {{/if}}
+  	{{#each socialPosts}}
+  		{{> postItem}}
+  	{{/each}}
 	</div>
 </template>
 
@@ -36,23 +10,13 @@
   {{#contentFor "headerTitle"}}
     <h1 class="title">Hashtag Live</h1>
   {{/contentFor}}
-  {{#if Template.subscriptionsReady}}
-    {{#ionView}}
-      {{#ionContent}}
-        {{#ionList}}
-          {{#each socialPosts}}
-            {{> postItem}}
-          {{/each}}
-          {{#if moreResults}}
-      		<div id="showMoreResults" style="margin-left: 25px;">
-          		<span class="loading">Loading...</span>
-      		</div>
-  		    {{/if}}
-        {{/ionList}}
-      {{/ionContent}}
-    {{/ionView}}
-  {{else}}
-    {{> spinner}}
-    Loading . . .
-  {{/if}}
+  {{#ionView}}
+    {{#ionContent}}
+      {{#ionList}}
+        {{#each socialPosts}}
+          {{> postItem}}
+        {{/each}}
+      {{/ionList}}
+    {{/ionContent}}
+  {{/ionView}}
 </template>

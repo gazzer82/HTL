@@ -2,17 +2,17 @@ Template.header.events({
   'click .newPosts' : function (e) {
     e.preventDefault();
     //Session.set('postFilter', 'new');
-    Router.go('socialPostsListNew');
+    Router.go('/new');
   },
     'click .approvedPosts' : function (e) {
     e.preventDefault();
     //Session.set('postFilter', 'approved');
-    Router.go('socialPostsListApproved');
+    Router.go('/approved');
   },
     'click .deletedPosts' : function (e) {
     e.preventDefault();
     //Session.set('postFilter', 'deleted');
-    Router.go('socialPostsListDeleted');
+    Router.go('/deleted');
   }
 });
 

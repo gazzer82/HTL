@@ -1,4 +1,4 @@
-Meteor.publish('socialPosts', function(filter, limit, roles) {
+/*Meteor.publish('socialPosts', function(filter, limit, roles) {
     var postsReturn = [];
     if (this.userId && Roles.userIsInRole(this.userId, ['admin'])){
       postsReturn = socialPosts.find({postStatus: filter}, {postDate: -1}, { limit: limit });
@@ -8,6 +8,16 @@ Meteor.publish('socialPosts', function(filter, limit, roles) {
     }
     postsReturn;
     return postsReturn;
+});*/
+
+Meteor.publish('socialPosts', function() {
+    return socialPosts.find();
+});
+
+Meteor.publish('allPosts', function(){
+  return Posts.find({'author':'Tom'}, {fields: {
+    date: false
+  }});
 });
 
 Meteor.publish('users', function(filter) {

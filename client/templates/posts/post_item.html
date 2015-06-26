@@ -24,10 +24,10 @@
       	{{postText}}
       </p>
       <span>
-      	{{#if $.Session.equals 'postFilter' 'new'}}<a class="btn btn-success approvePost" type="button" href="#">Approve</a>{{/if}}
-      	{{#if $.Session.equals 'postFilter' 'deleted'}}<a class="btn btn-success approvePost" type="button" href="#">Approve</a>{{/if}}
-      	{{#if $.Session.equals 'postFilter' 'new'}}<a class="btn btn-danger deletePost" type="button" href="#">Delete</a>{{/if}}
-      	{{#if $.Session.equals 'postFilter' 'approved'}}<a class="btn btn-danger deletePost" type="button" href="#">Delete</a>{{/if}}
+      	{{#if $.Session.equals 'currentTab' 'new'}}<a class="btn btn-success approvePost" type="button" href="#">Approve</a>{{/if}}
+      	{{#if $.Session.equals 'currentTab' 'deleted'}}<a class="btn btn-success approvePost" type="button" href="#">Approve</a>{{/if}}
+      	{{#if $.Session.equals 'currentTab' 'new'}}<a class="btn btn-danger deletePost" type="button" href="#">Delete</a>{{/if}}
+      	{{#if $.Session.equals 'currentTab' 'approved'}}<a class="btn btn-danger deletePost" type="button" href="#">Delete</a>{{/if}}
       </span>
     </div>
   </div>
