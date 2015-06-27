@@ -121,15 +121,17 @@ body {
 }
 
 .postProfane {
-  border-style: dashed;
+  border-style: solid;
   border-color: #980000;
+  background-color: #980000;
+  color: #fff;
 }
 
 html {
   overflow: auto;
 }
 
-//custom padding
+/*custom padding*/
 
 .voffset  { margin-top: 2px; }
 .voffset1 { margin-top: 5px; }
