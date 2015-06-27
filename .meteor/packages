@@ -35,3 +35,4 @@ appcache
 fastclick
 meteorhacks:fast-render
 ground:db
+miro:preloader
