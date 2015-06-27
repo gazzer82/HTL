@@ -1,4 +1,4 @@
-AutoForm.hooks({
+/*AutoForm.hooks({
   admin_insert: {
     onSuccess: function (formType, result) {
       if (this.template.data.collection._name == 'htlevents'){
@@ -29,4 +29,4 @@ var hooksObject = {
   },
 };
 
-AutoForm.addHooks(null, hooksObject);
+AutoForm.addHooks(null, hooksObject);*/
