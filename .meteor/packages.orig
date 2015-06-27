@@ -1,0 +1,40 @@
+# Meteor packages used by this project, one per line.
+# Check this file (and the other files in this directory) into your repository.
+#
+# 'meteor add' and 'meteor remove' will edit this file for you,
+# but you can also edit it by hand.
+
+meteor-platform
+percolate:synced-cron
+gazzer82:socialfetch
+meteorhacks:kadira
+iron:router
+twbs:bootstrap
+underscore
+sacha:spin
+ian:accounts-ui-bootstrap-3
+accounts-password
+momentjs:moment
+meteorhacks:kadira-profiler
+useraccounts:bootstrap
+email
+alanning:roles
+random
+cmather:handlebars-server
+raix:handlebar-helpers
+aldeed:collection2
+aldeed:autoform
+yogiben:admin
+matb33:collection-hooks
+gazzer82:profanity
+fourseven:scss@2.0.0
+meteoric:ionic-sass
+meteoric:ionicons-sass
+meteoric:ionic
+<<<<<<< HEAD
+ground:db
+=======
+appcache
+fastclick
+meteorhacks:fast-render
+>>>>>>> speed-improvements
