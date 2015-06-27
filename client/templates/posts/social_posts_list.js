@@ -3,8 +3,8 @@ Meteor.startup(function () {
     StatusBar.hide();
   }
 });
-
-Template.socialPostsList.helpers({
+/*
+Template.socialPostsIonic.helpers({
   pageTitle: function() { return Session.get('pageTitle'); },
   environment: function() {
     if (Meteor.isCordova){
@@ -50,7 +50,7 @@ Template.socialPostsListIonic.helpers({
   }
 });
 
-/*Template.socialPostsListNew.rendered = function () {
+Template.socialPostsListNew.rendered = function () {
   console.log('new list loaded');
   Deps.autorun(function () {
     if (!this.subscription.ready()) {
@@ -103,7 +103,7 @@ Template.socialPostsListDeleted.rendered = function () {
 
 var ITEMS_INCREMENT = 10;
 
-Template.socialPostsListNew.rendered = function () {
+/*Template.socialPostsListNew.rendered = function () {
     Session.set('currentTab', 'socialPostsListNew');
     Session.set('filter', 'new');
     //$('.bar-header').hide();
@@ -146,26 +146,46 @@ Template.socialPostsListDeleted.onCreated(function () {
   Session.set('filter', 'deleted');
   //RolesList = Roles.getRolesForUser(Meteor.userId());
   //this.subscribe('socialPosts', Session.get('filter'), Session.get('itemsLimit'), RolesList);
-});
+});*/
 
-Template.socialPostsListWeb.onCreated(function () {
+/*Template.socialPostsListWeb.onCreated(function () {
   // Use this.subscribe inside onCreated callback
   //Deps.autorun(function() {
     Session.setDefault('itemsLimit', ITEMS_INCREMENT);
     RolesList = Roles.getRolesForUser(Meteor.userId());
-    this.subscribe('socialPosts', Session.get('filter'), Session.get('itemsLimit'), RolesList);
+    this.subscribe('socialPosts', 'new', 10, RolesList);
   //});
-});
+});*/
 
-Template.socialPostsListIonic.onCreated(function () {
+/*Template.socialPostsListIonic.onCreated(function () {
   // Use this.subscribe inside onCreated callback
   //Deps.autorun(function() {
-    Session.setDefault('itemsLimit', ITEMS_INCREMENT);
-    RolesList = Roles.getRolesForUser(Meteor.userId());
-    this.subscribe('socialPosts', Session.get('filter'), Session.get('itemsLimit'), RolesList);
+    //Session.setDefault('itemsLimit', ITEMS_INCREMENT);
+    //RolesList = Roles.getRolesForUser(Meteor.userId());
+    //this.subscribe('socialPosts', Session.get('filter'), Session.get('itemsLimit'), RolesList);
+    console.log('appending ionic stylesheets');
+    $('head').append('<link rel="stylesheet" href="ionic.css" type="text/css">');
+    $('head').append('<link rel="stylesheet" href="ionicons.css" type="text/css">');
   //});
+});*/
+
+Template.socialPostsListIonic.rendered = function () {
+    console.log('appending ionic stylesheets');
+    $('head').append('<link rel="stylesheet" href="ionic.css" type="text/css">');
+    $('head').append('<link rel="stylesheet" href="ionicons.css" type="text/css">');
+};
+
+/*Template.socialPostsListWeb.helpers({
+  socialPosts: function() {
+    return socialPosts.find();
+  }
 });
 
+Template.socialPostsListIonic.helpers({
+  socialPosts: function() {
+    return socialPosts.find();
+  }
+});
 
 // whenever #showMoreResults becomes visible, retrieve more results
 function showMoreVisible() {
