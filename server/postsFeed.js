@@ -1,8 +1,8 @@
 postsFeedExport = function (postID) {
     var xmlBuilder = Meteor.npmRequire('xmlbuilder'); //needed to use xmlbuilder
-    var feed = xmlBuilder.create('array');
-    socialPosts.find({ $and: [{postStatus: 'approved'},{postEventID: postID}]}).forEach(function(postData) {
-        var post = feed.ele('dict');
+    var feed = xmlBuilder.create('posts');
+    socialPosts.find({ $and: [{postStatus: 'approved'},{postEventID: postID}]}, {sort: {postStatusDate:-1}}).forEach(function(postData) {
+        var post = feed.ele('post');
         post.ele('objectID', postData._id);
         post.ele('postID', postData.postID);        
 		post.ele('approvedDate', postData.postStatusDate);
