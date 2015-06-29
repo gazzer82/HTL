@@ -1,6 +1,8 @@
 <template name="layoutWeb">
     <div class="container">
-      {{>header}}
+      {{#if currentUser}}
+        {{>header}}
+      {{/if}}
       <div id="main">
         {{> yield}}
       </div>

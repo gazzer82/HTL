@@ -16,7 +16,6 @@ ian:accounts-ui-bootstrap-3
 accounts-password
 momentjs:moment
 meteorhacks:kadira-profiler
-useraccounts:bootstrap
 email
 alanning:roles
 random
@@ -36,3 +35,8 @@ fastclick
 meteorhacks:fast-render
 ground:db
 miro:preloader
+useraccounts:unstyled
+meteorhacks:npm
+
+
+npm-container

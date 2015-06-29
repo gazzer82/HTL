@@ -171,8 +171,8 @@ Template.socialPostsListDeleted.onCreated(function () {
 
 Template.socialPostsListIonic.rendered = function () {
     console.log('appending ionic stylesheets');
-    $('head').append('<link rel="stylesheet" href="ionic.css" type="text/css">');
-    $('head').append('<link rel="stylesheet" href="ionicons.css" type="text/css">');
+    //$('head').append('<link rel="stylesheet" href="ionic.css" type="text/css">');
+    //$('head').append('<link rel="stylesheet" href="ionicons.css" type="text/css">');
 };
 
 /*Template.socialPostsListWeb.helpers({
