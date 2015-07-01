@@ -1,0 +1,70 @@
+<template name="adminTools">
+	<div class='text-center admin-tools voffset4 '>
+		<h2>Admin Tools</h2>
+	</div>
+	<div class='event-select'>
+		<div class="row event-admin-buttons">
+			<div class="col-md-12">
+				<div class="col-md-3">
+				    <select class="selectpicker span2" id="eventPicker" >
+				        {{#each HTLEvents}}
+				            <option value="{{_id}}">{{eventName}}</option>
+				        {{/each}}
+				    </select>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<a class="btn btn-danger resetTwitter voffset4" type="button" href="#">Reset Twitter ID</a>
+			</div>
+			<div class="col-md-3">
+				<a class="btn btn-danger resetInstagram voffset4" type="button" href="#">Reset Instagram ID</a>
+			</div>
+			<div class="col-md-3">
+				<a class="btn btn-danger resetVine voffset4" type="button" href="#">Reset Vine ID</a>
+			</div>
+			<div class="col-md-3">
+				<a class="btn btn-danger deleteTwitter voffset4" type="button" href="#">Delete Tweets</a>
+			</div>
+			<div class="col-md-3">
+				<a class="btn btn-danger deleteInstagram voffset4" type="button" href="#">Delete Instagram Posts</a>
+			</div>
+			<div class="col-md-3">
+				<a class="btn btn-danger deleteVine voffset4" type="button" href="#">Delete Vine Posts</a>
+			</div>
+			<div class="col-md-3">
+				<a class="btn btn-danger deleteNew voffset4" type="button" href="#">Delete New Posts</a>
+			</div>
+			<div class="col-md-3">
+				<a class="btn btn-danger deleteApproved voffset4" type="button" href="#">Delete Approved Posts</a>
+			</div>
+			<div class="col-md-3">
+				<a class="btn btn-danger deleteDeleted voffset4" type="button" href="#">Purge Deleted Posts</a>
+			</div>
+			<div class="col-md-3">
+				<a class="btn btn-danger deleteAll voffset4" type="button" href="#">Reset and Remove All</a>
+			</div>
+	    </div>
+	</div>
+</template>
+
+<template name="exampleModal">
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Modal example</h4>
+                </div>
+
+                <div class="modal-body">
+                    <p>A modal example.</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</template>

@@ -17,14 +17,14 @@ accounts-password
 momentjs:moment
 meteorhacks:kadira-profiler
 email
-alanning:roles
 random
 cmather:handlebars-server
 raix:handlebar-helpers
-aldeed:collection2
 aldeed:autoform
-yogiben:admin
+aldeed:collection2
 matb33:collection-hooks
+alanning:roles
+yogiben:admin
 gazzer82:profanity
 fourseven:scss@2.0.0
 meteoric:ionic-sass
@@ -41,3 +41,5 @@ meteorhacks:npm
 
 npm-container
 natestrauser:connection-banner
+select2
+peppelg:bootstrap-3-modal

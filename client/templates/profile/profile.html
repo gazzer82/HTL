@@ -2,19 +2,16 @@
 {{#contentFor "headerTitle"}}
     <h1 class="title">Hashtag Live</h1>
   {{/contentFor}}
-  {{#if Template.subscriptionsReady}}
     {{#ionView}}
       {{#ionContent}}
+        {{#if isInRole 'admin'}}
+          {{>adminTools}}
+        {{/if}}
         {{#ionList}}
-        	<div></div>
-        	<div class='text-center logout-button voffset2'>
-				<a class="btn btn-success logout" type="button" href="#">logout</a>
-			</div>
+          <div class='text-center logout-button voffset4'>
+				  <a class="btn btn-success logout" type="button" href="#">logout</a>
+          </div>
         {{/ionList}}
       {{/ionContent}}
     {{/ionView}}
-  {{else}}
-    {{> spinner}}
-    Loading . . .
-  {{/if}}
 </template>
