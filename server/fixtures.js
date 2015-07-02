@@ -2,7 +2,7 @@ if (HTLEvents.find().count() === 0) {
       console.log("No events found, inserting defaults.");
       HTLEvents.insert({
           eventName: "macmillan",
-          twitterEnabled: true,
+          twitterEnabled: false,
           instagramEnabled: false,
           vineEnabled: false,
           fetchCount: 2,
