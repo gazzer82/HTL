@@ -27,8 +27,8 @@ socialfetch = {
 					/*jshint loopfunc: true */
 					fetchIndividual('twitter', termObject.term, defaultData.fetchCount, termObject.latestTwitter, defaultData._id, defaultData.eventName, function(err, data) {
 						callbackCount ++;
-						console.log("callbackCount = " + callbackCount);
-						console.log("callbackTarget = " + callbackTarget);
+						//console.log("callbackCount = " + callbackCount);
+						//console.log("callbackTarget = " + callbackTarget);
 						if (err) {
 							error = {
 								service:'twitter',
@@ -40,7 +40,7 @@ socialfetch = {
 							returnData.push(data);
 						}
 						if (callbackCount == callbackTarget){
-							console.log("all done fetching so calling callback");
+							console.log("all done fetching Twitter so calling callback");
 							callback(errors, returnData);
 						}
 						//console.log(returnData);
@@ -50,8 +50,8 @@ socialfetch = {
 					/*jshint loopfunc: true */
 					fetchIndividual('instagram', termObject.term, defaultData.fetchCount, termObject.latestInstagram, defaultData._id, defaultData.eventName, function(err, data) {
 						callbackCount ++;
-						console.log("callbackCount = " + callbackCount);
-						console.log("callbackTarget = " + callbackTarget);
+						//console.log("callbackCount = " + callbackCount);
+						//console.log("callbackTarget = " + callbackTarget);
 						if (err) {
 							error = {
 								service:'instagram',
@@ -63,7 +63,7 @@ socialfetch = {
 							returnData.push(data);
 						}
 						if (callbackCount == callbackTarget){
-							console.log("all done fetching so calling callback");
+							console.log("all done fetching Instagram so calling callback");
 							callback(errors, returnData);
 						}
 						//console.log(returnData);
@@ -73,8 +73,8 @@ socialfetch = {
 					/*jshint loopfunc: true */
 					fetchIndividual('vine', termObject.term, defaultData.fetchCount, termObject.latestVine, defaultData._id, defaultData.eventName, function(err, data) {
 						callbackCount ++;
-						console.log("callbackCount = " + callbackCount);
-						console.log("callbackTarget = " + callbackTarget);
+						//console.log("callbackCount = " + callbackCount);
+						//console.log("callbackTarget = " + callbackTarget);
 						if (err) {
 							error = {
 								service: 'vine',
@@ -87,7 +87,7 @@ socialfetch = {
 						}
 						if (callbackCount == callbackTarget){
 							console.log("all done fetching vine so calling callback");
-							console.log(util.inspect(returnData, false, null));
+							//console.log(util.inspect(returnData, false, null));
 							callback(errors, returnData);
 						}
 						//console.log(returnData);
@@ -352,16 +352,16 @@ instagramfetch = function (input, callback)  {
         //var postsArr = [];
         var d = new Date();
         var n = d.toISOString();
-        console.log(body.pagination.min_tag_id);
-        console.log(input.latestID);
+        //console.log(body.pagination.min_tag_id);
+        //console.log(input.latestID);
           if (body.pagination.min_tag_id > input.latestID || !input.latestID ){
             for (var i in body.data) {
-            	console.log("Entering Vine Loop");
+            	//console.log("Entering Vine Loop");
            		if (body.data[i].id > latestIDValue){
 	            	latestIDValue = body.data[i].id;
 	        	}
 	        	if (input.fetchCount == fetched) {
-	        		console.log("breaking");
+	        		//console.log("breaking");
 	        		break; 
 	        	}
 	        	fetched ++;
@@ -491,7 +491,7 @@ vinefetch = function (input, callback)  {
 	                    latestIDValue = body.data.records[i].postId;
 	                  }
 	                  	if (input.fetchCount == fetched) {
-	        				console.log("breaking");
+	        				//console.log("breaking");
 	        				break; 
 	        			}
 	        			fetched ++;

@@ -33,7 +33,7 @@ if (Meteor.isServer) {
           eventsToFetch = eventList.length;
           for (var eventi in eventList){
             /*jshint loopfunc: true */
-            console.log("Event Object = " + util.inspect(eventList[eventi], false, null));
+            //console.log("Event Object = " + util.inspect(eventList[eventi], false, null));
             socialfetch.fetch(eventList[eventi], Meteor.bindEnvironment(function(err, returnValue){
               /*jshint loopfunc: true */
               if (err.length) {
@@ -41,11 +41,6 @@ if (Meteor.isServer) {
                 for (var i in err){
                   console.log(err[i]);
                   throw err[i];
-                  //Meteor.call('fetchErrorsInsert', err[i], function(error, result){
-                  /*jshint loopfunc: true */
-                  //if(error)
-                  //  throw(error.reason);
-                  //});
                 }
               } else if (returnValue) {
 
@@ -56,30 +51,13 @@ if (Meteor.isServer) {
                     console.log("All went to plan");
                   });
                 }
-                
-                //console.log("We have " + returnValue.length + " seaches returned");
-                //for (i in returnValue){
-                  //var searchObject = returnValue[i][1]
-                  //console.log("Searched Object = " + util.inspect(searchObject, false, null));
 
-                          /*Meteor.call('searchTermsUpdateLatest', eventList[eventi]._id, returnValue[i][1].searchedTerm, returnValue[i][1].networkSearched, returnValue[i][1].latestID, function (error, eventList) {
-                          //Update the latest ID for this seach term.
-                          //console.log("These are the posts for " + util.inspect(returnValue[0][0][1], false, null));
-                          for (i2 in returnValue[i][0]) {
-                              //console.log(util.inspect(returnValue[0][i][i2], false, null));
-                              //console.log(returnValue[i][0][i2].postText);
-                              Meteor.call('socialPostsInsert', returnValue[i][0][i2], function(err, result){
-                                if (err){
-                                  throw(err)
-                                }
-                            });
-                        }});*/
-                  //}
               }
             }));
           }
 
-        }});
+        }
+      });
     }
   }),
 
@@ -109,36 +87,55 @@ if (Meteor.isServer) {
               if (err){
                 throw(err);
               }
+              if (i3 == (Object.keys(events[i][i2][0]).length - 1)){
+                Meteor.call('trimCollections', 3);
+              }
             });
           }
-          //var searchObject = postsArray;
-          //console.log("Searched Object = " + util.inspect(searchObject, false, null));
         }
       }
       return;
     },
+
     updateTermID: function(eventTerm) {
       //So checking to see which network it is that we've got posts from, and updating the lastes ID for that term/network
-      console.log(eventTerm);
+      //console.log(eventTerm);
       if(eventTerm.networkSearched === "twitter"){
-        console.log("Updating twitter latest id for " + eventTerm.searchedTerm);
+        //console.log("Updating twitter latest id for " + eventTerm.searchedTerm);
         HTLEvents.update({_id :eventTerm.eventID, "searchTerms.term":eventTerm.searchedTerm} , {$set: {"searchTerms.$.latestTwitter": eventTerm.latestID}});
       } else if (eventTerm.networkSearched === "instagram") {
-        console.log("Updating instagram latest id for " + eventTerm.searchedTerm);
+        //console.log("Updating instagram latest id for " + eventTerm.searchedTerm);
         HTLEvents.update({_id :eventTerm.eventID, "searchTerms.term":eventTerm.searchedTerm} , {$set: {"searchTerms.$.latestInstagram": eventTerm.latestID}});
       } else if (eventTerm.networkSearched === "vine") {
-        console.log("Updating vine latest id for " + eventTerm.searchedTerm);
+        //console.log("Updating vine latest id for " + eventTerm.searchedTerm);
         HTLEvents.update({_id :eventTerm.eventID, "searchTerms.term":eventTerm.searchedTerm} , {$set: {"searchTerms.$.latestVine": eventTerm.latestID}});
       }
+    },
+
+    trimCollections: function() {
+      events = HTLEvents.find();
+      events.forEach(function (event) {
+        if (event.autoTrimEnable){
+          if (socialPosts.find({$and: [{postStatus: 'new'},{postEventID: event._id}]}).count() > event.autoTrimCount){
+            limit = (socialPosts.find({$and: [{postStatus: 'new'},{postEventID: event._id}]}).count() - event.autoTrimCount);
+            console.log('Removing ' + limit + ' posts');
+            var eventsToPerge = socialPosts.find({$and: [{postStatus: 'new'},{postEventID: event._id}]},{limit: limit},{fields: {_id : 1}}).fetch();
+            var ids = [];
+            for (var i in eventsToPerge){
+              ids.push(eventsToPerge[i]._id);
+            }
+            //console.log(eventsToPerge);
+            console.log(ids);
+            console.log(event.eventName + ' is ' + socialPosts.find({$and: [{postStatus: 'new'},{postEventID: event._id}]}).count() + ' long and the maximum size is ' + event.autoTrimCount + ' so trimming ' + limit + ' posts.');
+            socialPosts.remove({_id: {$in: ids}});
+            //socialPosts.remove({ $and: [{postStatus: 'new'},{postEventID: event._id}]}, {sort: {postDate:1}},{limit: socialPosts.find({$and: [{postStatus: 'new'},{postEventID: event._id}]}).count() - size});
+          }
+        }
+      });
     }
   }),
   
   Meteor.startup(function (){
-    //socialPosts = new Mongo.Collection('socialposts');
-    //fetchErrors = new Mongo.Collection('fetcherrors');
-    // code to run on server at startup
     SyncedCron.start();
-    // Stop jobs after 15 seconds
-    //Meteor.setTimeout(function() { SyncedCron.stop(); }, 15 * 1000);
   });
 }

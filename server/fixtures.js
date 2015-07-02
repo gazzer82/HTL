@@ -7,6 +7,8 @@ if (HTLEvents.find().count() === 0) {
           vineEnabled: false,
           fetchCount: 2,
           enabled: false,
+          autoTrimEnable: true,
+          autoTrimCount: 10,
           searchTerms: [
             {
               term: "badger",

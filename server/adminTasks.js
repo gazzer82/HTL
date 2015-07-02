@@ -39,6 +39,10 @@ Meteor.methods({
     } else {
       console.log("User not autheticated to peform action");
     }
+  },
+  pruneCollections: function (max) {
+    var events = HTLEvents.find().fetch();
+
   }
 });
 
@@ -53,13 +57,17 @@ deleteByStatusAction = function (status, event){
 };
 
 resetAction = function (network, event){
-  console.log("Resetting ID for " + network + " for event " + event);
-  if(network === "twitter"){
-    HTLEvents.update({_id :event} , {$set: {"searchTerms.$.latestTwitter": 0}});
-  } else if (network === "instagram") {
-    HTLEvents.update({_id :event} , {$set: {"searchTerms.$.latestInstagram": 0}});
-  } else if (network === "vine") {
-    HTLEvents.update({_id :event} , {$set: {"searchTerms.$.latestVine": 0}});
+  eventToReset = HTLEvents.find({_id: event}).fetch();
+  console.dir(eventToReset[0].searchTerms[0].term);
+  for (var i in eventToReset[0].searchTerms){
+    console.log("Resetting ID for " + network + " for event " + event);
+    if(network === "twitter"){
+      HTLEvents.update({_id :event, "searchTerms.term":eventToReset[0].searchTerms[i].term} , {$set: {"searchTerms.$.latestTwitter": 0}});
+    } else if (network === "instagram") {
+      HTLEvents.update({_id :event, "searchTerms.term":eventToReset[0].searchTerms[i].term} , {$set: {"searchTerms.$.latestInstagram": 0}});
+    } else if (network === "vine") {
+      HTLEvents.update({_id :event, "searchTerms.term":eventToReset[0].searchTerms[i].term} , {$set: {"searchTerms.$.latestVine": 0}});
+    }
   }
 };
 
