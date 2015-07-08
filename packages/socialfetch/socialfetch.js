@@ -201,7 +201,7 @@ twitterfetch = function(input, callback){
 
 	    var latestIDValue = 0;
 	    if (input.latestID > 0){
-	        latestIDValue = input.latestID;
+	        latestIDValue = input.latestID + 1;
 	    }
 	    var returnArr = [];
 	    var postsArr = [];
@@ -332,7 +332,6 @@ instagramfetch = function (input, callback)  {
       }
 
       console.log("Searching instagram for " + searchTerm);
-      console.log(tempURL);
         request.get({
         url: tempURL,
         json: true,
