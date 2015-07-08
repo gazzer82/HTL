@@ -332,7 +332,7 @@ instagramfetch = function (input, callback)  {
       }
 
       console.log("Searching instagram for " + searchTerm);
-
+      console.log(tempURL);
         request.get({
         url: tempURL,
         json: true,
@@ -354,7 +354,7 @@ instagramfetch = function (input, callback)  {
         var n = d.toISOString();
         //console.log(body.pagination.min_tag_id);
         //console.log(input.latestID);
-          if (body.pagination.min_tag_id > input.latestID || !input.latestID ){
+          //if (body.pagination.min_tag_id > input.latestID || !input.latestID ){
             for (var i in body.data) {
             	//console.log("Entering Vine Loop");
            		if (body.data[i].id > latestIDValue){
@@ -409,7 +409,7 @@ instagramfetch = function (input, callback)  {
 		            postVideoURL: postVideoURL
 	            });
             }
-          }
+          //}
     }
     var values = {};
     if (postsArr.length > 0){
@@ -504,6 +504,10 @@ vinefetch = function (input, callback)  {
 	                  var postScanned = false;
 	                  var postEventID = input.eventID;
 	                  var postEventName = input.eventName;
+	                  var postProfane = false;
+	                  if (body.data.records[i].explicitContent === true){
+	                  	postProfane = true;
+	                  }
 	                  postsArr.push({
 	                    postID: body.data.records[i].postId,
 	                    postEventID: postEventID,
@@ -512,7 +516,7 @@ vinefetch = function (input, callback)  {
 	                    postStatus: 'new',
 	                    postDate: moment(body.data.records[i].created).format(),
 	                    postScanned: false,
-	                    postProfane: false,
+	                    postProfane: postProfane,
 	                    postScheduleDate: '',
 	                    postUserImageURL: body.data.records[i].avatarUrl,
 	                    postUserRealName: body.data.records[i].username,
