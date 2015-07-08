@@ -14,6 +14,9 @@ Meteor.methods({
         case "resetInstagram":
           resetAction('instagram', event._id);
             break;
+        case "resetAll":
+          resetAll(event._id);
+            break;
         case "deleteTwitter":
           deleteByNetworkAction('twitter', event._id);
             break;
@@ -33,7 +36,10 @@ Meteor.methods({
           deleteByStatusAction('deleted', event._id);
             break;
         case "deleteAll":
-          resetAllAction(event._id);
+          deleteAll(event._id);
+            break;
+        case "fullReset":
+          resetAndDeleteAll(event._id);
             break;
       }
     } else {
@@ -71,10 +77,24 @@ resetAction = function (network, event){
   }
 };
 
-resetAllAction = function (event){
-  console.log("Peforming master reset for event " + event);
-  HTLEvents.update({_id :event} , {$set: {"searchTerms.$.latestTwitter": 0}});
-  HTLEvents.update({_id :event} , {$set: {"searchTerms.$.latestInstagram": 0}});
-  HTLEvents.update({_id :event} , {$set: {"searchTerms.$.latestVine": 0}});
+resetAll = function (event){
+  eventToReset = HTLEvents.find({_id: event}).fetch();
+  console.dir(eventToReset[0].searchTerms[0].term);
+  for (var i in eventToReset[0].searchTerms){
+    console.log("Resetting ID for all networks for event " + event);
+      HTLEvents.update({_id :event, "searchTerms.term":eventToReset[0].searchTerms[i].term} , {$set: {"searchTerms.$.latestTwitter": 0}});
+      HTLEvents.update({_id :event, "searchTerms.term":eventToReset[0].searchTerms[i].term} , {$set: {"searchTerms.$.latestInstagram": 0}});
+      HTLEvents.update({_id :event, "searchTerms.term":eventToReset[0].searchTerms[i].term} , {$set: {"searchTerms.$.latestVine": 0}});
+  }
+};
+
+deleteAll = function (event){
+  console.log("Deleteing all posts for event " + event);
   socialPosts.remove({postEventID: event});
+};
+
+resetAndDeleteAll = function (event){
+  console.log("Performing full reset and delete for " + event);
+  resetAll(event);
+  deleteAll(event);
 };
